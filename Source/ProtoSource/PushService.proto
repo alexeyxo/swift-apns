@@ -1,0 +1,47 @@
+syntax="proto3";
+package Apple.APNS;
+message ProviderData {
+    enum Identity {
+		Production = 0;
+		Development = 1;
+	}
+	string bundle = 1;
+	string token = 2;
+	uint32 priority = 3;
+	Push payload = 4;
+	Identity serviceIdentity = 5;
+	string certificateName = 6;
+	string certificatePassphrase = 7;
+}
+
+ message Response {
+    /*
+    200 - Success
+    400 - Bad request
+    403 - There was an error with the certificate.
+    405 - The request used a bad :method value. Only POST requests are supported.
+    410 - The device token is no longer active for the topic.
+    413 - The notification payload was too large.
+    429 - The server received too many requests for the same device token. 
+    500 - Internal server error
+    503 - The server is shutting down and unavailable.
+    */
+    int32 statusCode = 1;
+    string apns_id = 2;
+    string reason = 3;
+    string reasonDescription = 4;
+ }
+
+message Push {
+    message Aps {
+        string alert = 1;
+        string sound = 2;
+        int32 badge = 3;
+        int32 content_available = 4;
+        string category = 5; 
+    }
+    
+	Aps aps = 1;
+}
+
+
