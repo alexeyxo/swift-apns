@@ -1,5 +1,5 @@
 //
-//  swift-apns.swift
+//  Network.swift
 //  APNS
 //
 //  Created by Alexey Khokhlov on 25.01.16.
