@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "APNS"
-  s.version      = "1.0"
+  s.version      = "1.0.0"
   s.summary      = "Swift Framework for sending Apple Push Notification over HTTP/2 API"
   s.homepage     = "https://github.com/alexeyxo/swift-apns"
   s.license      = "Apache 2.0"
