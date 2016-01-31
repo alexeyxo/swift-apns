@@ -1,5 +1,5 @@
 #Simple framework for sending Apple Push Notifications
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/APNS.svg)](http://cocoapods.org/?q=APNS) [![Platform](http://img.shields.io/cocoapods/p/APNS.svg)](http://cocoapods.org/?q=APNS)
 
 ##<img src="https://cloud.githubusercontent.com/assets/432536/5252404/443d64f4-7952-11e4-9d26-fc5cc664cb61.png" width="22" height="22"> Installation via [Carthage](https://github.com/Carthage/Carthage)
 ```Cartfile
