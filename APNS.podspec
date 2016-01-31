@@ -31,5 +31,4 @@ Pod::Spec.new do |s|
   s.source_files = 'Source/*.{swift}'
   s.requires_arc = true
   s.frameworks   = 'Foundation', 'Security'
-  s.dependency 'ProtocolBuffers-Swift', '>3.0.0'
 end

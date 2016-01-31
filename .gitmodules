@@ -1,3 +1,0 @@
-[submodule "Framework/Module"]
-	path = Framework/Module
-	url = https://github.com/alexeyxo/protobuf-swift

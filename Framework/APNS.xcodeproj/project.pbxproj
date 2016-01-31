@@ -7,76 +7,67 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F388E141C5E1DC20000EDCE /* APNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBC7E71C5CC20F00EF69CC /* APNS.framework */; };
+		3F388E221C5E35F20000EDCE /* UnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F388E111C5E1DC20000EDCE /* UnitTest.swift */; };
 		3FBBC7EB1C5CC20F00EF69CC /* APNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FBBC7EA1C5CC20F00EF69CC /* APNS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3FBBC7F41C5CC25100EF69CC /* Apple.Apns.PushService.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBC7F21C5CC25100EF69CC /* Apple.Apns.PushService.proto.swift */; };
-		3FBBC7F51C5CC25100EF69CC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBC7F31C5CC25100EF69CC /* Network.swift */; };
-		3FBBC80C1C5CD15400EF69CC /* ProtocolBuffers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBC8071C5CD14700EF69CC /* ProtocolBuffers.framework */; };
+		3FBBC7F51C5CC25100EF69CC /* APNSNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBC7F31C5CC25100EF69CC /* APNSNetwork.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3FBBC8021C5CD14700EF69CC /* PBXContainerItemProxy */ = {
+		3F388E151C5E1DC20000EDCE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F85569919C71BCF003802F2;
-			remoteInfo = ProtocolBuffers;
-		};
-		3FBBC8041C5CD14700EF69CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F8556A419C71BCF003802F2;
-			remoteInfo = UnitTesting;
-		};
-		3FBBC8061C5CD14700EF69CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F41061C1A1A667700742090;
-			remoteInfo = "ProtocolBuffers(OSX)";
-		};
-		3FBBC8081C5CD14700EF69CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F4106261A1A667800742090;
-			remoteInfo = "UnitTesting(OSX)";
-		};
-		3FBBC80A1C5CD14700EF69CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F31A1A91BA199C000F477C1;
-			remoteInfo = "ProtocolBuffers(watchOS)";
+			containerPortal = 3FBBC7DE1C5CC20F00EF69CC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3FBBC7E61C5CC20F00EF69CC;
+			remoteInfo = APNS;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F388E0F1C5E1DC20000EDCE /* UnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F388E111C5E1DC20000EDCE /* UnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTest.swift; sourceTree = "<group>"; };
+		3F388E131C5E1DC20000EDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F388E1D1C5E29BE0000EDCE /* APNS-Protobuf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "APNS-Protobuf.swift"; path = "../../protobuf/APNS-Protobuf.swift"; sourceTree = "<group>"; };
+		3F388E1E1C5E29BE0000EDCE /* Apple.Apns.PushService.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Apple.Apns.PushService.proto.swift; path = ../../protobuf/Apple.Apns.PushService.proto.swift; sourceTree = "<group>"; };
 		3FBBC7E71C5CC20F00EF69CC /* APNS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = APNS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBBC7EA1C5CC20F00EF69CC /* APNS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNS.h; sourceTree = "<group>"; };
 		3FBBC7EC1C5CC20F00EF69CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FBBC7F21C5CC25100EF69CC /* Apple.Apns.PushService.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Apple.Apns.PushService.proto.swift; path = ../../Source/Apple.Apns.PushService.proto.swift; sourceTree = "<group>"; };
-		3FBBC7F31C5CC25100EF69CC /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Network.swift; path = ../../Source/Network.swift; sourceTree = "<group>"; };
-		3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = Module/plugin/ProtocolBuffers/ProtocolBuffers.xcodeproj; sourceTree = "<group>"; };
+		3FBBC7F31C5CC25100EF69CC /* APNSNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APNSNetwork.swift; path = ../../Source/APNSNetwork.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3F388E0C1C5E1DC20000EDCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F388E141C5E1DC20000EDCE /* APNS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3FBBC7E31C5CC20F00EF69CC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FBBC80C1C5CD15400EF69CC /* ProtocolBuffers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F388E101C5E1DC20000EDCE /* UnitTest */ = {
+			isa = PBXGroup;
+			children = (
+				3F388E111C5E1DC20000EDCE /* UnitTest.swift */,
+				3F388E131C5E1DC20000EDCE /* Info.plist */,
+			);
+			path = UnitTest;
+			sourceTree = "<group>";
+		};
 		3FBBC7DD1C5CC20F00EF69CC = {
 			isa = PBXGroup;
 			children = (
-				3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */,
 				3FBBC7E91C5CC20F00EF69CC /* APNS */,
+				3F388E101C5E1DC20000EDCE /* UnitTest */,
 				3FBBC7E81C5CC20F00EF69CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				3FBBC7E71C5CC20F00EF69CC /* APNS.framework */,
+				3F388E0F1C5E1DC20000EDCE /* UnitTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,24 +84,13 @@
 		3FBBC7E91C5CC20F00EF69CC /* APNS */ = {
 			isa = PBXGroup;
 			children = (
-				3FBBC7F21C5CC25100EF69CC /* Apple.Apns.PushService.proto.swift */,
-				3FBBC7F31C5CC25100EF69CC /* Network.swift */,
+				3F388E1D1C5E29BE0000EDCE /* APNS-Protobuf.swift */,
+				3F388E1E1C5E29BE0000EDCE /* Apple.Apns.PushService.proto.swift */,
+				3FBBC7F31C5CC25100EF69CC /* APNSNetwork.swift */,
 				3FBBC7EA1C5CC20F00EF69CC /* APNS.h */,
 				3FBBC7EC1C5CC20F00EF69CC /* Info.plist */,
 			);
 			path = APNS;
-			sourceTree = "<group>";
-		};
-		3FBBC7FB1C5CD14700EF69CC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3FBBC8031C5CD14700EF69CC /* ProtocolBuffers.framework */,
-				3FBBC8051C5CD14700EF69CC /* ProtocolBuffersTests.xctest */,
-				3FBBC8071C5CD14700EF69CC /* ProtocolBuffers.framework */,
-				3FBBC8091C5CD14700EF69CC /* UnitTesting(OSX).xctest */,
-				3FBBC80B1C5CD14700EF69CC /* ProtocolBuffers.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +107,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		3F388E0E1C5E1DC20000EDCE /* UnitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F388E171C5E1DC20000EDCE /* Build configuration list for PBXNativeTarget "UnitTest" */;
+			buildPhases = (
+				3F388E0B1C5E1DC20000EDCE /* Sources */,
+				3F388E0C1C5E1DC20000EDCE /* Frameworks */,
+				3F388E0D1C5E1DC20000EDCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F388E161C5E1DC20000EDCE /* PBXTargetDependency */,
+			);
+			name = UnitTest;
+			productName = UnitTest;
+			productReference = 3F388E0F1C5E1DC20000EDCE /* UnitTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3FBBC7E61C5CC20F00EF69CC /* APNS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3FBBC7EF1C5CC20F00EF69CC /* Build configuration list for PBXNativeTarget "APNS" */;
@@ -150,9 +149,13 @@
 		3FBBC7DE1C5CC20F00EF69CC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Alexey Khokhlov";
 				TargetAttributes = {
+					3F388E0E1C5E1DC20000EDCE = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					3FBBC7E61C5CC20F00EF69CC = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -168,58 +171,22 @@
 			mainGroup = 3FBBC7DD1C5CC20F00EF69CC;
 			productRefGroup = 3FBBC7E81C5CC20F00EF69CC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 3FBBC7FB1C5CD14700EF69CC /* Products */;
-					ProjectRef = 3FBBC7FA1C5CD14700EF69CC /* ProtocolBuffers.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				3FBBC7E61C5CC20F00EF69CC /* APNS */,
+				3F388E0E1C5E1DC20000EDCE /* UnitTest */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		3FBBC8031C5CD14700EF69CC /* ProtocolBuffers.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ProtocolBuffers.framework;
-			remoteRef = 3FBBC8021C5CD14700EF69CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3FBBC8051C5CD14700EF69CC /* ProtocolBuffersTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ProtocolBuffersTests.xctest;
-			remoteRef = 3FBBC8041C5CD14700EF69CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3FBBC8071C5CD14700EF69CC /* ProtocolBuffers.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ProtocolBuffers.framework;
-			remoteRef = 3FBBC8061C5CD14700EF69CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3FBBC8091C5CD14700EF69CC /* UnitTesting(OSX).xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "UnitTesting(OSX).xctest";
-			remoteRef = 3FBBC8081C5CD14700EF69CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3FBBC80B1C5CD14700EF69CC /* ProtocolBuffers.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ProtocolBuffers.framework;
-			remoteRef = 3FBBC80A1C5CD14700EF69CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
+		3F388E0D1C5E1DC20000EDCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3FBBC7E51C5CC20F00EF69CC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,18 +197,55 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3F388E0B1C5E1DC20000EDCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F388E221C5E35F20000EDCE /* UnitTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3FBBC7E21C5CC20F00EF69CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FBBC7F51C5CC25100EF69CC /* Network.swift in Sources */,
-				3FBBC7F41C5CC25100EF69CC /* Apple.Apns.PushService.proto.swift in Sources */,
+				3FBBC7F51C5CC25100EF69CC /* APNSNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3F388E161C5E1DC20000EDCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3FBBC7E61C5CC20F00EF69CC /* APNS */;
+			targetProxy = 3F388E151C5E1DC20000EDCE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3F388E181C5E1DC20000EDCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = UnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexeyxo.UnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3F388E191C5E1DC20000EDCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = UnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexeyxo.UnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		3FBBC7ED1C5CC20F00EF69CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -378,6 +382,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3F388E171C5E1DC20000EDCE /* Build configuration list for PBXNativeTarget "UnitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F388E181C5E1DC20000EDCE /* Debug */,
+				3F388E191C5E1DC20000EDCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		3FBBC7E11C5CC20F00EF69CC /* Build configuration list for PBXProject "APNS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

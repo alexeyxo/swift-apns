@@ -18,7 +18,7 @@ public func == (lhs: Apple.Apns.ProviderData, rhs: Apple.Apns.ProviderData) -> B
   fieldCheck = fieldCheck && (lhs.hasPriority == rhs.hasPriority) && (!lhs.hasPriority || lhs.priority == rhs.priority)
   fieldCheck = fieldCheck && (lhs.hasPayload == rhs.hasPayload) && (!lhs.hasPayload || lhs.payload == rhs.payload)
   fieldCheck = fieldCheck && (lhs.hasServiceIdentity == rhs.hasServiceIdentity) && (!lhs.hasServiceIdentity || lhs.serviceIdentity == rhs.serviceIdentity)
-  fieldCheck = fieldCheck && (lhs.hasCertificateName == rhs.hasCertificateName) && (!lhs.hasCertificateName || lhs.certificateName == rhs.certificateName)
+  fieldCheck = fieldCheck && (lhs.hasCertificatePath == rhs.hasCertificatePath) && (!lhs.hasCertificatePath || lhs.certificatePath == rhs.certificatePath)
   fieldCheck = fieldCheck && (lhs.hasCertificatePassphrase == rhs.hasCertificatePassphrase) && (!lhs.hasCertificatePassphrase || lhs.certificatePassphrase == rhs.certificatePassphrase)
   fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
   return fieldCheck
@@ -117,8 +117,8 @@ public extension Apple.Apns {
     public private(set) var payload:Apple.Apns.Push!
     public private(set) var serviceIdentity:Apple.Apns.ProviderData.Identity = Apple.Apns.ProviderData.Identity.Production
     public private(set) var hasServiceIdentity:Bool = false
-    public private(set) var hasCertificateName:Bool = false
-    public private(set) var certificateName:String = ""
+    public private(set) var hasCertificatePath:Bool = false
+    public private(set) var certificatePath:String = ""
 
     public private(set) var hasCertificatePassphrase:Bool = false
     public private(set) var certificatePassphrase:String = ""
@@ -145,8 +145,8 @@ public extension Apple.Apns {
       if hasServiceIdentity {
         try output.writeEnum(5, value:serviceIdentity.rawValue)
       }
-      if hasCertificateName {
-        try output.writeString(6, value:certificateName)
+      if hasCertificatePath {
+        try output.writeString(6, value:certificatePath)
       }
       if hasCertificatePassphrase {
         try output.writeString(7, value:certificatePassphrase)
@@ -177,8 +177,8 @@ public extension Apple.Apns {
       if (hasServiceIdentity) {
         serialize_size += serviceIdentity.rawValue.computeEnumSize(5)
       }
-      if hasCertificateName {
-        serialize_size += certificateName.computeStringSize(6)
+      if hasCertificatePath {
+        serialize_size += certificatePath.computeStringSize(6)
       }
       if hasCertificatePassphrase {
         serialize_size += certificatePassphrase.computeStringSize(7)
@@ -254,8 +254,8 @@ public extension Apple.Apns {
       if hasServiceIdentity {
         jsonMap["serviceIdentity"] = serviceIdentity.toString()
       }
-      if hasCertificateName {
-        jsonMap["certificateName"] = certificateName
+      if hasCertificatePath {
+        jsonMap["certificatePath"] = certificatePath
       }
       if hasCertificatePassphrase {
         jsonMap["certificatePassphrase"] = certificatePassphrase
@@ -289,8 +289,8 @@ public extension Apple.Apns {
       if (hasServiceIdentity) {
         output += "\(indent) serviceIdentity: \(serviceIdentity.rawValue)\n"
       }
-      if hasCertificateName {
-        output += "\(indent) certificateName: \(certificateName) \n"
+      if hasCertificatePath {
+        output += "\(indent) certificatePath: \(certificatePath) \n"
       }
       if hasCertificatePassphrase {
         output += "\(indent) certificatePassphrase: \(certificatePassphrase) \n"
@@ -318,8 +318,8 @@ public extension Apple.Apns {
             if hasServiceIdentity {
                hashCode = (hashCode &* 31) &+ Int(serviceIdentity.rawValue)
             }
-            if hasCertificateName {
-               hashCode = (hashCode &* 31) &+ certificateName.hashValue
+            if hasCertificatePath {
+               hashCode = (hashCode &* 31) &+ certificatePath.hashValue
             }
             if hasCertificatePassphrase {
                hashCode = (hashCode &* 31) &+ certificatePassphrase.hashValue
@@ -495,27 +495,27 @@ public extension Apple.Apns {
            builderResult.serviceIdentity = .Production
            return self
         }
-      public var hasCertificateName:Bool {
+      public var hasCertificatePath:Bool {
            get {
-                return builderResult.hasCertificateName
+                return builderResult.hasCertificatePath
            }
       }
-      public var certificateName:String {
+      public var certificatePath:String {
            get {
-                return builderResult.certificateName
+                return builderResult.certificatePath
            }
            set (value) {
-               builderResult.hasCertificateName = true
-               builderResult.certificateName = value
+               builderResult.hasCertificatePath = true
+               builderResult.certificatePath = value
            }
       }
-      public func setCertificateName(value:String) -> Apple.Apns.ProviderData.Builder {
-        self.certificateName = value
+      public func setCertificatePath(value:String) -> Apple.Apns.ProviderData.Builder {
+        self.certificatePath = value
         return self
       }
-      public func clearCertificateName() -> Apple.Apns.ProviderData.Builder{
-           builderResult.hasCertificateName = false
-           builderResult.certificateName = ""
+      public func clearCertificatePath() -> Apple.Apns.ProviderData.Builder{
+           builderResult.hasCertificatePath = false
+           builderResult.certificatePath = ""
            return self
       }
       public var hasCertificatePassphrase:Bool {
@@ -580,8 +580,8 @@ public extension Apple.Apns {
         if other.hasServiceIdentity {
              serviceIdentity = other.serviceIdentity
         }
-        if other.hasCertificateName {
-             certificateName = other.certificateName
+        if other.hasCertificatePath {
+             certificatePath = other.certificatePath
         }
         if other.hasCertificatePassphrase {
              certificatePassphrase = other.certificatePassphrase
@@ -627,7 +627,7 @@ public extension Apple.Apns {
             }
 
           case 50 :
-            certificateName = try input.readString()
+            certificatePath = try input.readString()
 
           case 58 :
             certificatePassphrase = try input.readString()
@@ -658,8 +658,8 @@ public extension Apple.Apns {
         if let jsonValueServiceIdentity = jsonMap["serviceIdentity"] as? String {
           resultDecodedBuilder.serviceIdentity = try Apple.Apns.ProviderData.Identity.fromString(jsonValueServiceIdentity)
         }
-        if let jsonValueCertificateName = jsonMap["certificateName"] as? String {
-          resultDecodedBuilder.certificateName = jsonValueCertificateName
+        if let jsonValueCertificatePath = jsonMap["certificatePath"] as? String {
+          resultDecodedBuilder.certificatePath = jsonValueCertificatePath
         }
         if let jsonValueCertificatePassphrase = jsonMap["certificatePassphrase"] as? String {
           resultDecodedBuilder.certificatePassphrase = jsonValueCertificatePassphrase

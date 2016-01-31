@@ -10,7 +10,7 @@ message ProviderData {
 	uint32 priority = 3;
 	Push payload = 4;
 	Identity serviceIdentity = 5;
-	string certificateName = 6;
+	string certificatePath = 6;
 	string certificatePassphrase = 7;
 }
 
