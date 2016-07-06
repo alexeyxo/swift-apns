@@ -1,5 +1,17 @@
-#Simple framework for sending Apple Push Notifications
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/APNS.svg)](http://cocoapods.org/?q=APNS) [![Platform](http://img.shields.io/cocoapods/p/APNS.svg)](http://cocoapods.org/?q=APNS)
+<p align="center">
+  <a href="">
+    <img alt="Logo" src="logo.png" width="600px">
+  </a>
+
+   Simple framework for sending Apple Push Notifications.
+
+  <a href="https://github.com/Carthage/Carthage"><img alt="Carthage compatible" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
+
+  <a href="http://cocoapods.org/?q=APNS"><img alt="Version" src="http://img.shields.io/cocoapods/v/APNS.svg"></a>
+
+  <a href="http://cocoapods.org/?q=APNS"><img alt="Platform" src="http://img.shields.io/cocoapods/p/APNS.svg"></a>
+
+</p>
 
 ## Installation
 
@@ -99,27 +111,27 @@ do {
 #### Sending custom objects
 
 1. Edit ./Source/ProtoSource/PushService.proto:
-```protobuf
-...
-message Push {
-    message Aps {
-        string alert = 1;
-        string sound = 2;
-        int32 badge = 3;
-        int32 content_available = 4;
-        string category = 5;
-    }
+  ```protobuf
+  ...
+  message Push {
+      message Aps {
+          string alert = 1;
+          string sound = 2;
+          int32 badge = 3;
+          int32 content_available = 4;
+          string category = 5;
+      }
 
-    message ExampleCustomObject {
-        string objectId = 1;
-    }
+      message ExampleCustomObject {
+          string objectId = 1;
+      }
 
-  Aps aps = 1;
-    ExampleCustomObject customObject = 2;
-}
-```
+    Aps aps = 1;
+      ExampleCustomObject customObject = 2;
+  }
+  ```
 
 2. Compile new object:
-```bash
-protoc PushService.proto --swift_out="../"
-```
+  ```bash
+  protoc PushService.proto --swift_out="../"
+  ```
