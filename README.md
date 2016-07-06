@@ -21,11 +21,11 @@
 ## Table of Contents
 
 - [Installation](#installation)
-  - [CocoaPods](#cocoapods)
-  - [Carthage](#carthage)
+  - [CocoaPods](#-cocoapods)
+  - [Carthage](#-carthage)
 - [Usage](#usage)
   - [Simple Example](#simple-example)
-  - [Using with "Protocol Buffers"](#sending-custom-objects)
+  - [Using with "Protocol Buffers"](#using-with-protocol-buffers)
     - [Simple Example](#simple-example-1)
     - [Sending Custom Objects](#sending-custom-objects)
 
