@@ -2,8 +2,13 @@
   <a href="">
     <img alt="Logo" src="logo.png" width="600px">
   </a>
+</p>
 
+<p align="center">
    Simple framework for sending Apple Push Notifications.
+</p>
+
+<p align="center">
 
   <a href="https://github.com/Carthage/Carthage"><img alt="Carthage compatible" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 
