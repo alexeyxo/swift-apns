@@ -1,6 +1,6 @@
 <p align="center">
   <a href="">
-    <img alt="Logo" src="logo.png" width="600px">
+    <img alt="Logo" src="logo.png" width="500px">
   </a>
 </p>
 
@@ -17,6 +17,17 @@
   <a href="http://cocoapods.org/?q=APNS"><img alt="Platform" src="http://img.shields.io/cocoapods/p/APNS.svg"></a>
 
 </p>
+
+## Table of Contents
+
+- [Installation](#installation)
+  - [CocoaPods](#cocoapods)
+  - [Carthage](#carthage)
+- [Usage](#usage)
+  - [Simple Example](#simple-example)
+  - [Using with "Protocol Buffers"](#sending-custom-objects)
+    - [Simple Example](#simple-example-1)
+    - [Sending Custom Objects](#sending-custom-objects)
 
 ## Installation
 
@@ -85,7 +96,7 @@ try! APNSNetwork().sendPush("com.myapp.bundle",
 
 ### Using with "Protocol Buffers"
 
-> Required Protocol Buffers 3.0 and [protobuf-swift](https://github.com/alexeyxo/protobuf-swift)
+> Required Protocol Buffers 3.0 and [protobuf-swift](https://github.com/alexeyxo/protobuf-swift).
 
 #### Simple Example
 ```swift
@@ -113,7 +124,7 @@ do {
 }
 ```
 
-#### Sending custom objects
+#### Sending Custom Objects
 
 1. Edit ./Source/ProtoSource/PushService.proto:
   ```protobuf
