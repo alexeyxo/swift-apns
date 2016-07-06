@@ -28,6 +28,7 @@
   - [Using with "Protocol Buffers"](#using-with-protocol-buffers)
     - [Simple Example](#simple-example-1)
     - [Sending Custom Objects](#sending-custom-objects)
+- [Credits](#credits)
 
 ## Installation
 
@@ -151,3 +152,11 @@ do {
   ```bash
   protoc PushService.proto --swift_out="../"
   ```
+
+## Credits
+
+- The bird used in the logo - as well as the cloud - are borrowed respectively
+from the original *Swift* and *APNs* logos which have
+*All Rights Reserved to Apple Inc.
+
+- The font used in logo comes from the [San Francisco family](https://developer.apple.com/fonts/).
