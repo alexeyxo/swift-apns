@@ -1,12 +1,57 @@
 #Simple framework for sending Apple Push Notifications
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/APNS.svg)](http://cocoapods.org/?q=APNS) [![Platform](http://img.shields.io/cocoapods/p/APNS.svg)](http://cocoapods.org/?q=APNS)
 
-##<img src="https://cloud.githubusercontent.com/assets/432536/5252404/443d64f4-7952-11e4-9d26-fc5cc664cb61.png" width="22" height="22"> Installation via [Carthage](https://github.com/Carthage/Carthage)
-```Cartfile
+## Installation
+
+### <img src="https://avatars3.githubusercontent.com/u/1189714" width="22" height="22"> CocoaPods
+
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```bash
+$ gem install cocoapods
+```
+
+To integrate *swift-apns* into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+    pod 'APNS', '~> 1.0'
+end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
+### <img src="https://cloud.githubusercontent.com/assets/432536/5252404/443d64f4-7952-11e4-9d26-fc5cc664cb61.png" width="22" height="22"> Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew install carthage
+```
+
+To integrate *swift-apns* into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
 github "alexeyxo/swift-apns"
 ```
 
-###Example
+Run `carthage update` to build the framework and drag the built `.framework` file into your Xcode project.
+
+
+## Usage
+
+### Simple Example
+
 ```swift
 let aps = ["sound":"default", "alert":"testPush()"]
 let payload = ["aps":aps]
@@ -17,17 +62,15 @@ try! APNSNetwork().sendPush("com.myapp.bundle",
         certificatePath: NSBundle.mainBundle().pathForResource("push", ofType: "p12")!,
         passphrase: "123456",
         sandbox: true) { (response) -> Void in
- 
+
         }
 ```
 
-##Using with "Protocol Buffers"
-####Required Protocol Buffers 3.0 and [protobuf-swift](https://github.com/alexeyxo/protobuf-swift)
-```Cartfile
-github "alexeyxo/protobuf-swift" "ProtoBuf3.0-Swift2.0"
-```
+### Using with "Protocol Buffers"
 
-###Example
+> Required Protocol Buffers 3.0 and [protobuf-swift](https://github.com/alexeyxo/protobuf-swift)
+
+#### Simple Example
 ```swift
 let providerData = Apple.Apns.ProviderData.Builder()
 providerData.bundle = "com.advisa.voipservice"
@@ -49,15 +92,13 @@ do {
         print(response)
     })
 } catch {
-    
-}
 
+}
 ```
 
-###Sending custom objects
+#### Sending custom objects
 
-Edit ./Source/ProtoSource/PushService.proto
-
+1. Edit ./Source/ProtoSource/PushService.proto:
 ```protobuf
 ...
 message Push {
@@ -66,17 +107,19 @@ message Push {
         string sound = 2;
         int32 badge = 3;
         int32 content_available = 4;
-        string category = 5; 
+        string category = 5;
     }
-    
+
     message ExampleCustomObject {
         string objectId = 1;
     }
-    
-	Aps aps = 1;
+
+  Aps aps = 1;
     ExampleCustomObject customObject = 2;
 }
 ```
 
-Compile new object:
-```protoc PushService.proto --swift_out="../"```
+2. Compile new object:
+```bash
+protoc PushService.proto --swift_out="../"
+```
