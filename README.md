@@ -1,6 +1,6 @@
 <p align="center">
   <a href="">
-    <img alt="Logo" src="https://github.com/alexeyxo/swift-apns/blob/master/logo.png" width="500px">
+    <img alt="Logo" src="https://raw.githubusercontent.com/alexeyxo/swift-apns/master/logo.png" width="500px">
   </a>
 </p>
 
