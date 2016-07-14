@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Swift-apns by alexeyxo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Swift-apns</h1>
+        <p>Swift Framework for sending Apple Push Notification over HTTP/2 API</p>
+
+        <p class="view"><a href="https://github.com/alexeyxo/swift-apns">View the Project on GitHub <small>alexeyxo/swift-apns</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/alexeyxo/swift-apns/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/alexeyxo/swift-apns/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/alexeyxo/swift-apns">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p align="center">
+  <a href="">
+    <img alt="Logo" src="https://raw.githubusercontent.com/alexeyxo/swift-apns/master/logo.png" width="500px">
+  </a>
+</p>
+
+<p align="center">
+   Simple framework for sending Apple Push Notifications.
+</p>
+
+<p align="center">
+
+  <a href="https://github.com/Carthage/Carthage"><img alt="Carthage compatible" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
+
+  <a href="http://cocoapods.org/?q=APNS"><img alt="Version" src="http://img.shields.io/cocoapods/v/APNS.svg"></a>
+
+  <a href="http://cocoapods.org/?q=APNS"><img alt="Platform" src="http://img.shields.io/cocoapods/p/APNS.svg"></a>
+
+</p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ul>
+<li>
+<a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#-cocoapods">CocoaPods</a></li>
+<li><a href="#-carthage">Carthage</a></li>
+</ul>
+</li>
+<li>
+<a href="#usage">Usage</a>
+
+<ul>
+<li><a href="#simple-example">Simple Example</a></li>
+<li>
+<a href="#using-with-protocol-buffers">Using with "Protocol Buffers"</a>
+
+<ul>
+<li><a href="#simple-example-1">Simple Example</a></li>
+<li><a href="#sending-custom-objects">Sending Custom Objects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#credits">Credits</a></li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="-cocoapods" class="anchor" href="#-cocoapods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><img src="https://avatars3.githubusercontent.com/u/1189714" width="22" height="22"> CocoaPods</h3>
+
+<p><a href="http://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects. You can install it with the following command:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ gem install cocoapods</pre></div>
+
+<p>To integrate <em>swift-apns</em> into your Xcode project using CocoaPods, specify it in your <code>Podfile</code>:</p>
+
+<div class="highlight highlight-source-ruby"><pre>source <span class="pl-s"><span class="pl-pds">'</span>https://github.com/CocoaPods/Specs.git<span class="pl-pds">'</span></span>
+platform <span class="pl-c1">:ios</span>, <span class="pl-s"><span class="pl-pds">'</span>9.0<span class="pl-pds">'</span></span>
+use_frameworks!
+
+target <span class="pl-s"><span class="pl-pds">'</span>&lt;Your Target Name&gt;<span class="pl-pds">'</span></span> <span class="pl-k">do</span>
+    pod <span class="pl-s"><span class="pl-pds">'</span>APNS<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>~&gt; 1.0<span class="pl-pds">'</span></span>
+<span class="pl-k">end</span></pre></div>
+
+<p>Then, run the following command:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ pod install</pre></div>
+
+<h3>
+<a id="-carthage" class="anchor" href="#-carthage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><img src="https://cloud.githubusercontent.com/assets/432536/5252404/443d64f4-7952-11e4-9d26-fc5cc664cb61.png" width="22" height="22"> Carthage</h3>
+
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.</p>
+
+<p>You can install Carthage with <a href="http://brew.sh/">Homebrew</a> using the following command:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ brew install carthage</pre></div>
+
+<p>To integrate <em>swift-apns</em> into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+
+<pre lang="ogdl"><code>github "alexeyxo/swift-apns"
+</code></pre>
+
+<p>Run <code>carthage update</code> to build the framework and drag the built <code>.framework</code> file into your Xcode project.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="simple-example" class="anchor" href="#simple-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple Example</h3>
+
+<div class="highlight highlight-source-swift"><pre><span class="pl-k">let</span> aps <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>sound<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>alert<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>testPush()<span class="pl-pds">"</span></span>]
+<span class="pl-k">let</span> payload <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>aps<span class="pl-pds">"</span></span>:aps]
+<span class="pl-k">try</span><span class="pl-k">!</span> APNSNetwork()<span class="pl-k">.</span>sendPush(<span class="pl-s"><span class="pl-pds">"</span>com.myapp.bundle<span class="pl-pds">"</span></span>,
+        priority: <span class="pl-c1">10</span>,
+        payload: payload,
+        deviceToken: <span class="pl-s"><span class="pl-pds">"</span>3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe<span class="pl-pds">"</span></span>,
+        certificatePath: NSBundle<span class="pl-k">.</span>mainBundle()<span class="pl-k">.</span>pathForResource(<span class="pl-s"><span class="pl-pds">"</span>push<span class="pl-pds">"</span></span>, ofType: <span class="pl-s"><span class="pl-pds">"</span>p12<span class="pl-pds">"</span></span>)<span class="pl-k">!</span>,
+        passphrase: <span class="pl-s"><span class="pl-pds">"</span>123456<span class="pl-pds">"</span></span>,
+        sandbox: <span class="pl-c1">true</span>) { (response) <span class="pl-k">-&gt;</span> <span class="pl-c1">Void</span> <span class="pl-k">in</span>
+
+        }</pre></div>
+
+<h3>
+<a id="using-with-protocol-buffers" class="anchor" href="#using-with-protocol-buffers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using with "Protocol Buffers"</h3>
+
+<blockquote>
+<p>Required Protocol Buffers 3.0 and <a href="https://github.com/alexeyxo/protobuf-swift">protobuf-swift</a>.</p>
+</blockquote>
+
+<h4>
+<a id="simple-example-1" class="anchor" href="#simple-example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple Example</h4>
+
+<div class="highlight highlight-source-swift"><pre><span class="pl-k">let</span> providerData <span class="pl-k">=</span> Apple<span class="pl-k">.</span>Apns<span class="pl-k">.</span>ProviderData<span class="pl-k">.</span>Builder()
+providerData<span class="pl-k">.</span>bundle <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>com.advisa.voipservice<span class="pl-pds">"</span></span>
+providerData<span class="pl-k">.</span>serviceIdentity <span class="pl-k">=</span> Apple<span class="pl-k">.</span>Apns<span class="pl-k">.</span>ProviderData<span class="pl-k">.</span>Identity<span class="pl-k">.</span>Development
+providerData<span class="pl-k">.</span>priority <span class="pl-k">=</span> <span class="pl-c1">10</span>
+providerData<span class="pl-k">.</span>certificatePath <span class="pl-k">=</span> NSBundle(forClass:UnitTest<span class="pl-k">.</span><span class="pl-k">self</span>)<span class="pl-k">.</span>pathForResource(<span class="pl-s"><span class="pl-pds">"</span>push<span class="pl-pds">"</span></span>, ofType: <span class="pl-s"><span class="pl-pds">"</span>p12<span class="pl-pds">"</span></span>)<span class="pl-k">!</span>
+providerData<span class="pl-k">.</span>certificatePassphrase <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>123456<span class="pl-pds">"</span></span>
+providerData<span class="pl-k">.</span>token <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe<span class="pl-pds">"</span></span>
+
+<span class="pl-k">let</span> aps <span class="pl-k">=</span> Apple<span class="pl-k">.</span>Apns<span class="pl-k">.</span>Push<span class="pl-k">.</span>Aps<span class="pl-k">.</span>Builder()
+aps<span class="pl-k">.</span>badge <span class="pl-k">=</span> <span class="pl-c1">1</span>
+aps<span class="pl-k">.</span>contentAvailable <span class="pl-k">=</span> <span class="pl-c1">1</span>
+aps<span class="pl-k">.</span>sound <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>
+aps<span class="pl-k">.</span>alert <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>testSendProtobuf()<span class="pl-pds">"</span></span>
+<span class="pl-k">do</span> {
+    <span class="pl-k">let</span> payload <span class="pl-k">=</span> <span class="pl-k">try</span> Apple<span class="pl-k">.</span>Apns<span class="pl-k">.</span>Push<span class="pl-k">.</span>Builder()<span class="pl-k">.</span>setAps(aps<span class="pl-k">.</span>build())<span class="pl-k">.</span>build()
+    providerData<span class="pl-k">.</span>payload <span class="pl-k">=</span> payload
+    <span class="pl-k">try</span> APNSNetwork()<span class="pl-k">.</span>sendPush(providerData<span class="pl-k">.</span>build(), responseBlock: { (response) <span class="pl-k">-&gt;</span> () <span class="pl-k">in</span>
+        <span class="pl-c1">print</span>(response)
+    })
+} <span class="pl-k">catch</span> {
+
+}</pre></div>
+
+<h4>
+<a id="sending-custom-objects" class="anchor" href="#sending-custom-objects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sending Custom Objects</h4>
+
+<ol>
+<li>
+<p>Edit ./Source/ProtoSource/PushService.proto:</p>
+
+<div class="highlight highlight-source-protobuf"><pre>...
+<span class="pl-k">message</span> <span class="pl-en">Push</span> {
+    <span class="pl-k">message</span> <span class="pl-en">Aps</span> {
+        string alert = 1;
+        string sound = 2;
+        int32 badge = 3;
+        int32 content_available = 4;
+        string category = 5;
+    }
+
+    <span class="pl-k">message</span> <span class="pl-en">ExampleCustomObject</span> {
+        string objectId = 1;
+    }
+
+  Aps aps = 1;
+    ExampleCustomObject customObject = 2;
+}</pre></div>
+</li>
+<li>
+<p>Compile new object:</p>
+
+<div class="highlight highlight-source-shell"><pre>protoc PushService.proto --swift_out=<span class="pl-s"><span class="pl-pds">"</span>../<span class="pl-pds">"</span></span></pre></div>
+</li>
+</ol>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li><p>The bird used in the logo - as well as the cloud - are borrowed respectively
+from the original <em>Swift</em> and <em>APNs</em> logos which have
+*All Rights Reserved to Apple Inc.</p></li>
+<li><p>The font used in logo comes from the <a href="https://developer.apple.com/fonts/">San Francisco family</a>.</p></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/alexeyxo">alexeyxo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
