@@ -79,50 +79,50 @@ public struct APNServiceResponse {
     public var apnsId:String?
 }
 
-public enum APNServiceStatus: ErrorType {
-    case Success
-    case BadRequest
-    case BadCertitficate
-    case BadMethod
-    case DeviceTokenIsNoLongerActive
-    case BadNotificationPayload
-    case ServerReceivedTooManyRequests
-    case InternalServerError
-    case ServerShutingDownOrUnavailable
+public enum APNServiceStatus: ErrorProtocol {
+    case success
+    case badRequest
+    case badCertitficate
+    case badMethod
+    case deviceTokenIsNoLongerActive
+    case badNotificationPayload
+    case serverReceivedTooManyRequests
+    case internalServerError
+    case serverShutingDownOrUnavailable
     
-    public static func checkStatusCode(response:NSHTTPURLResponse) -> (Int, APNServiceStatus) {
+    public static func checkStatusCode(response:HTTPURLResponse) -> (Int, APNServiceStatus) {
         switch response.statusCode {
         case 400:
-            return (response.statusCode,APNServiceStatus.BadRequest)
+            return (response.statusCode,APNServiceStatus.badRequest)
         case 403:
-            return (response.statusCode,APNServiceStatus.BadCertitficate)
+            return (response.statusCode,APNServiceStatus.badCertitficate)
         case 405:
-            return (response.statusCode,APNServiceStatus.BadMethod)
+            return (response.statusCode,APNServiceStatus.badMethod)
         case 410:
-            return (response.statusCode,APNServiceStatus.DeviceTokenIsNoLongerActive)
+            return (response.statusCode,APNServiceStatus.deviceTokenIsNoLongerActive)
         case 413:
-            return (response.statusCode,APNServiceStatus.BadNotificationPayload)
+            return (response.statusCode,APNServiceStatus.badNotificationPayload)
         case 429:
-            return (response.statusCode,APNServiceStatus.ServerReceivedTooManyRequests)
+            return (response.statusCode,APNServiceStatus.serverReceivedTooManyRequests)
         case 500:
-            return (response.statusCode,APNServiceStatus.InternalServerError)
+            return (response.statusCode,APNServiceStatus.internalServerError)
         case 503:
-            return (response.statusCode,APNServiceStatus.ServerShutingDownOrUnavailable)
-        default: return (response.statusCode,APNServiceStatus.Success)
+            return (response.statusCode,APNServiceStatus.serverShutingDownOrUnavailable)
+        default: return (response.statusCode,APNServiceStatus.success)
         }
     }
 }
 
 public class APNSNetwork:NSObject {
-    private var secIdentity:SecIdentityRef?
-    private var session:NSURLSession?
+    private var secIdentity:SecIdentity?
+    private var session:URLSession?
     public override init() {
         super.init()
-        self.session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        self.session = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
     }
     
-    internal func getIdentityWith(certificatePath:String, passphrase:String) -> SecIdentityRef? {
-        let PKCS12Data = NSData(contentsOfFile: certificatePath)
+    internal func getIdentityWith(certificatePath:String, passphrase:String) -> SecIdentity? {
+        let PKCS12Data = try? Data(contentsOf: URL(fileURLWithPath: certificatePath))
         let key : String = kSecImportExportPassphrase as String
         let options = [key : passphrase]
         var items : CFArray?
@@ -134,45 +134,54 @@ public class APNSNetwork:NSObject {
         if CFArrayGetCount(arr) > 0 {
             let newArray = arr as [AnyObject]
             let dictionary = newArray[0]
-            let secIdentity = dictionary.valueForKey(kSecImportItemIdentity as String) as! SecIdentityRef
+            let secIdentity = dictionary.value(forKey: kSecImportItemIdentity as String) as! SecIdentity
             return secIdentity
         }
         return nil
     }
-    private func getServiceURL(sandbox:Bool, token:String) -> NSURL {
+    private func getServiceURL(_ sandbox:Bool, token:String) -> URL {
         var serviceStrUrl:String?
         switch sandbox {
         case true: serviceStrUrl = "https://api.development.push.apple.com:443/3/device/"
         case false: serviceStrUrl = "https://api.push.apple.com:443/3/device/"
         }
-        return NSURL(string: serviceStrUrl! + token)!
+        return URL(string: serviceStrUrl! + token)!
     }
     
-    public func sendPush(topic:String, priority:Int, payload:Dictionary<String,AnyObject>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> Void)?) throws -> NSURLSessionDataTask? {
+    public func sendPush(topic:String, priority:Int, payload:Dictionary<String,AnyObject>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> ())?, networkError:((NSError?)->())?) throws -> URLSessionDataTask? {
         
         let url = getServiceURL(sandbox, token: deviceToken)
-        let request = NSMutableURLRequest(URL: url)
+        var request = URLRequest(url: url)
         
-        guard let ind = getIdentityWith(certificatePath, passphrase: passphrase) else {
+        guard let ind = getIdentityWith(certificatePath: certificatePath, passphrase: passphrase) else {
             return nil
         }
         self.secIdentity = ind
         
-        let data = try NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(rawValue: 0))
-        request.HTTPBody = data
-        request.HTTPMethod = "POST"
+        let data = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions(rawValue: 0))
+        request.httpBody = data
+        request.httpMethod = "POST"
         request.addValue(topic, forHTTPHeaderField: "apns-topic")
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
-        let task = self.session?.dataTaskWithRequest(request, completionHandler: { (data, response, err) -> Void in
-           
-            let (statusCode, status) = APNServiceStatus.checkStatusCode((response as! NSHTTPURLResponse))
-            let httpResponse = (response as! NSHTTPURLResponse)
+        let task = self.session?.dataTask(with: request, completionHandler:{ (data, response, err) -> Void in
+            
+            guard err == nil else {
+                networkError?(err)
+                return
+            }
+            guard let response = response as? HTTPURLResponse else {
+                networkError?(err)
+                return
+            }
+            
+            let (statusCode, status) = APNServiceStatus.checkStatusCode(response: response)
+            let httpResponse = response
             let apnsId = httpResponse.allHeaderFields["apns-id"] as? String
             var responseStatus = APNServiceResponse(serviceStatus: (statusCode, status), serviceErrorReason: nil, apnsId: apnsId)
             
-            guard status == .Success else {
-                let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
+            guard status == .success else {
+                let json = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0))
                 let serviceReason = APNServiceErrorReason(rawValue: (json["reason"] as! String))
                 responseStatus.serviceErrorReason = serviceReason
                 responseBlock?(responseStatus)
@@ -187,13 +196,13 @@ public class APNSNetwork:NSObject {
     }
 }
 
-extension APNSNetwork:NSURLSessionDelegate {
-    public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+extension APNSNetwork:URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: (Foundation.URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
         var cert : SecCertificate?
         SecIdentityCopyCertificate(self.secIdentity!, &cert)
-        let credentials = NSURLCredential(identity: self.secIdentity!, certificates: [cert!], persistence: .ForSession)
-        completionHandler(.UseCredential,credentials)
+        let credentials = URLCredential(identity: self.secIdentity!, certificates: [cert!], persistence: .forSession)
+        completionHandler(.useCredential,credentials)
     }
 }
 

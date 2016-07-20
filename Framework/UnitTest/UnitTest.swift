@@ -12,7 +12,7 @@ class UnitTest: XCTestCase {
     var expectation:XCTestExpectation = XCTestExpectation()
     override func setUp() {
         super.setUp()
-        self.expectation = self.expectationWithDescription("server response")
+        self.expectation = self.expectation(description:"server response")
     }
     
     override func tearDown() {
@@ -57,17 +57,13 @@ class UnitTest: XCTestCase {
         
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
-        try! APNSNetwork().sendPush("com.advisa.voipservice",
-            priority: 10,
-            payload: payload,
-            deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
-            certificatePath: NSBundle(forClass:UnitTest.self).pathForResource("push", ofType: "p12")!,
-            passphrase: "123456",
-            sandbox: true) { (response) -> Void in
+        _ = try! APNSNetwork().sendPush(topic: "com.advisa.voipservice", priority: 10, payload: payload, deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe", certificatePath: Bundle(for:UnitTest.self).pathForResource("push", ofType: "p12")!, passphrase: "123456", sandbox: true, responseBlock: { (response) in
                 XCTAssertTrue(response.serviceStatus.0 == 200)
                 self.expectation.fulfill()
-        }
-        self.waitForExpectationsWithTimeout(5, handler: { (error) -> Void in
+            }, networkError: { (error) in
+                
+        })
+        self.waitForExpectations(timeout: 5, handler: { (error) -> Void in
             if (error != nil) {
                 XCTFail("Timeout error: \(error)")
             }
