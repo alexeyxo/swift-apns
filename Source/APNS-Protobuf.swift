@@ -8,6 +8,8 @@
 
 import Foundation
 
+//extension
+
 extension APNSNetwork {
     
     public func sendPush(pushService:Apple.Apns.ProviderData, responseBlock:((response:Apple.Apns.Response) -> Void)?, networkError:((NSError?) -> ())?) throws -> URLSessionDataTask? {

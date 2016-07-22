@@ -84,15 +84,40 @@ Run `carthage update` to build the framework and drag the built `.framework` fil
 ```swift
 let aps = ["sound":"default", "alert":"testPush()"]
 let payload = ["aps":aps]
-try! APNSNetwork().sendPush("com.myapp.bundle",
-        priority: 10,
-        payload: payload,
-        deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
-        certificatePath: NSBundle.mainBundle().pathForResource("push", ofType: "p12")!,
-        passphrase: "123456",
-        sandbox: true) { (response) -> Void in
+_ = try! APNSNetwork().sendPush(topic: "com.asdasd.asdasdas", priority: 10, payload: payload, deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe", certificatePath: Bundle(for:UnitTest.self).pathForResource("push", ofType: "p12")!, passphrase: "123456", sandbox: true, responseBlock: { (response) in
+        XCTAssertTrue(response.serviceStatus.0 == 200)
+        self.expectation.fulfill()
+    }, networkError: { (error) in
+        
+})
+```
 
+```swift
+        
+        let aps = ["sound":"default", "alert":"testPush()"]
+        let payload = ["aps":aps]
+        let str = Bundle(for:UnitTest.self).pathForResource("cert", ofType: "p12")!
+        var mess = ApplePushMessage(topic: "com.tests.asdasdasd",
+                             priority: 10,
+                             payload: payload,
+                             deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
+                             certificatePath:str,
+                             passphrase: "123456",
+                             sandbox: true,
+                             responseBlock:nil,
+                             networkError:nil, session: nil)
+        
+        mess.responseBlock = { response in
         }
+        
+        mess.networkError = { err in
+            if (err != nil) {
+
+            }
+        }
+        _ = try! mess.send() // OR try! mess.send(session:<URLSession>) 
+        
+
 ```
 
 ### Using with "Protocol Buffers"
@@ -102,7 +127,7 @@ try! APNSNetwork().sendPush("com.myapp.bundle",
 #### Simple Example
 ```swift
 let providerData = Apple.Apns.ProviderData.Builder()
-providerData.bundle = "com.advisa.voipservice"
+providerData.bundle = "com.aasdad.asdasdsdfa"
 providerData.serviceIdentity = Apple.Apns.ProviderData.Identity.Development
 providerData.priority = 10
 providerData.certificatePath = NSBundle(forClass:UnitTest.self).pathForResource("push", ofType: "p12")!

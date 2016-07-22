@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import APNS
+@testable import APNS
 class UnitTest: XCTestCase {
     var expectation:XCTestExpectation = XCTestExpectation()
     override func setUp() {
@@ -53,22 +53,77 @@ class UnitTest: XCTestCase {
 //        }
 //    }
     
+    
     func testPush() {
         
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
-        _ = try! APNSNetwork().sendPush(topic: "com.advisa.voipservice", priority: 10, payload: payload, deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe", certificatePath: Bundle(for:UnitTest.self).pathForResource("push", ofType: "p12")!, passphrase: "123456", sandbox: true, responseBlock: { (response) in
-                XCTAssertTrue(response.serviceStatus.0 == 200)
-                self.expectation.fulfill()
-            }, networkError: { (error) in
-                
-        })
+        let str = Bundle(for:UnitTest.self).pathForResource("cert", ofType: "p12")!
+        var mess = ApplePushMessage(topic: "com.advisa.voipservice",
+                             priority: 10,
+                             payload: payload,
+                             deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
+                             certificatePath:str,
+                             passphrase: "123456",
+                             sandbox: true,
+                             responseBlock:nil,
+                             networkError:nil, session: nil)
+        
+        mess.responseBlock = { response in
+            XCTAssertTrue(response.serviceStatus.0 == 200)
+            self.expectation.fulfill()
+        }
+        
+        mess.networkError = { err in
+            if (err != nil) {
+                XCTFail("Timeout error: \(err)")
+            }
+
+        }
+        _ = try! mess.send()
+        
         self.waitForExpectations(timeout: 5, handler: { (error) -> Void in
             if (error != nil) {
                 XCTFail("Timeout error: \(error)")
             }
         })
 
+    }
+    
+    func testPushFails() {
+        
+        let aps = ["sound":"default", "alert":"testPush()"]
+        let payload = ["aps":aps]
+        let str = Bundle(for:UnitTest.self).pathForResource("cert", ofType: "p12")!
+        var mess = ApplePushMessage(topic: "com.advisa.voipservice",
+                                    priority: 10,
+                                    payload: payload,
+                                    deviceToken: "3dd55a590564asdasd41ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
+                                    certificatePath:str,
+                                    passphrase: "123456",
+                                    sandbox: true,
+                                    responseBlock:nil,
+                                    networkError:nil, session: nil)
+        
+        mess.responseBlock = { response in
+            XCTAssertTrue(response.serviceStatus.1 == APNServiceStatus.badRequest)
+            self.expectation.fulfill()
+        }
+        
+        mess.networkError = { err in
+            if (err != nil) {
+                XCTFail("Timeout error: \(err)")
+            }
+            
+        }
+        _ = try! mess.send()
+        
+        self.waitForExpectations(timeout: 5, handler: { (error) -> Void in
+            if (error != nil) {
+                XCTFail("Timeout error: \(error)")
+            }
+        })
+        
     }
     
 }

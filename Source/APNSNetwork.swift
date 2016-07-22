@@ -9,7 +9,6 @@
 import Foundation
 import Security
 
-
 public enum APNServiceErrorReason:String,CustomStringConvertible {
     case PayloadEmpty = "PayloadEmpty"
     case PayloadTooLarge = "PayloadTooLarge"
@@ -113,42 +112,72 @@ public enum APNServiceStatus: ErrorProtocol {
     }
 }
 
+/// Apple Push Notification Message
+public struct ApplePushMessage {
+    
+    /// ApplicationBundle
+    public var topic:String
+    /// APNS Priority 5 or 10
+    public var priority:Int
+    /// APNS Payload aps {...}
+    public var payload:Dictionary<String,AnyObject>
+    /// Device Token without <> and whitespaces
+    public var deviceToken:String
+    /// Path for P12 certificate
+    public var certificatePath:String
+    /// Passphrase for certificate
+    public var passphrase:String
+    /// Use sandbox server URL or not
+    public var sandbox:Bool
+    /// Response Clousure
+    public var responseBlock:((APNServiceResponse) -> ())?
+    /// Network error Clousure
+    public var networkError:((NSError?)->())?
+    /// Custom UrlSession
+    public var session:URLSession?
+    /// Send current message
+    ///
+    /// - throws: Method can throw error if payload data isn't parse.
+    ///
+    /// - returns: URLSessionDataTask
+    public func send() throws -> URLSessionDataTask? {
+        return try APNSNetwork(session:session).sendPush(pushMessage: self)
+    }
+    /// Send current message with custom URLSession
+    ///
+    /// - parameter session: URLSession
+    ///
+    /// - throws: Method can throw error if payload data isn't parse.
+    ///
+    /// - returns: URLSessionDataTask
+    public func send(session:URLSession?) throws -> URLSessionDataTask? {
+        return try APNSNetwork(session:session).sendPush(pushMessage: self)
+    }
+}
+
+
 public class APNSNetwork:NSObject {
     private var secIdentity:SecIdentity?
-    private var session:URLSession?
-    public override init() {
+    static private var session:URLSession?
+    public convenience override init() {
+        self.init(session:nil)
+    }
+    
+    public init(session:URLSession?) {
         super.init()
-        self.session = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        guard let session = session else {
+            APNSNetwork.session = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            return
+        }
+        APNSNetwork.session = session
+    }
+
+    
+    public func sendPush(pushMessage:ApplePushMessage) throws -> URLSessionDataTask?  {
+        return try sendPush(topic: pushMessage.topic, priority: pushMessage.priority, payload: pushMessage.payload, deviceToken: pushMessage.deviceToken, certificatePath: pushMessage.certificatePath, passphrase: pushMessage.passphrase, sandbox: pushMessage.sandbox, responseBlock:   pushMessage.responseBlock, networkError: pushMessage.networkError)
     }
     
-    internal func getIdentityWith(certificatePath:String, passphrase:String) -> SecIdentity? {
-        let PKCS12Data = try? Data(contentsOf: URL(fileURLWithPath: certificatePath))
-        let key : String = kSecImportExportPassphrase as String
-        let options = [key : passphrase]
-        var items : CFArray?
-        let ossStatus = SecPKCS12Import(PKCS12Data!, options, &items)
-        guard ossStatus == errSecSuccess else {
-            return nil
-        }
-        let arr = items!
-        if CFArrayGetCount(arr) > 0 {
-            let newArray = arr as [AnyObject]
-            let dictionary = newArray[0]
-            let secIdentity = dictionary.value(forKey: kSecImportItemIdentity as String) as! SecIdentity
-            return secIdentity
-        }
-        return nil
-    }
-    private func getServiceURL(_ sandbox:Bool, token:String) -> URL {
-        var serviceStrUrl:String?
-        switch sandbox {
-        case true: serviceStrUrl = "https://api.development.push.apple.com:443/3/device/"
-        case false: serviceStrUrl = "https://api.push.apple.com:443/3/device/"
-        }
-        return URL(string: serviceStrUrl! + token)!
-    }
-    
-    public func sendPush(topic:String, priority:Int, payload:Dictionary<String,AnyObject>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> ())?, networkError:((NSError?)->())?) throws -> URLSessionDataTask? {
+    internal func sendPush(topic:String, priority:Int, payload:Dictionary<String,AnyObject>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> ())?, networkError:((NSError?)->())?) throws -> URLSessionDataTask? {
         
         let url = getServiceURL(sandbox, token: deviceToken)
         var request = URLRequest(url: url)
@@ -164,7 +193,7 @@ public class APNSNetwork:NSObject {
         request.addValue(topic, forHTTPHeaderField: "apns-topic")
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
-        let task = self.session?.dataTask(with: request, completionHandler:{ (data, response, err) -> Void in
+        let task = APNSNetwork.session?.dataTask(with: request, completionHandler:{ (data, response, err) -> Void in
             
             guard err == nil else {
                 networkError?(err)
@@ -203,6 +232,36 @@ extension APNSNetwork:URLSessionDelegate {
         SecIdentityCopyCertificate(self.secIdentity!, &cert)
         let credentials = URLCredential(identity: self.secIdentity!, certificates: [cert!], persistence: .forSession)
         completionHandler(.useCredential,credentials)
+    }
+}
+
+extension APNSNetwork {
+    internal func getIdentityWith(certificatePath:String, passphrase:String) -> SecIdentity? {
+        let PKCS12Data = try? Data(contentsOf: URL(fileURLWithPath: certificatePath))
+        let key : String = kSecImportExportPassphrase as String
+        let options = [key : passphrase]
+        var items : CFArray?
+        let ossStatus = SecPKCS12Import(PKCS12Data!, options, &items)
+        guard ossStatus == errSecSuccess else {
+            return nil
+        }
+        let arr = items!
+        if CFArrayGetCount(arr) > 0 {
+            let newArray = arr as [AnyObject]
+            let dictionary = newArray[0]
+            let secIdentity = dictionary.value(forKey: kSecImportItemIdentity as String) as! SecIdentity
+            return secIdentity
+        }
+        return nil
+    }
+    
+    private func getServiceURL(_ sandbox:Bool, token:String) -> URL {
+        var serviceStrUrl:String?
+        switch sandbox {
+        case true: serviceStrUrl = "https://api.development.push.apple.com:443/3/device/"
+        case false: serviceStrUrl = "https://api.push.apple.com:443/3/device/"
+        }
+        return URL(string: serviceStrUrl! + token)!
     }
 }
 
