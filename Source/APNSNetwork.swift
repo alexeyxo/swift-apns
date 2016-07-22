@@ -114,8 +114,9 @@ public enum APNServiceStatus: ErrorProtocol {
 
 /// Apple Push Notification Message
 public struct ApplePushMessage {
-    
-    /// ApplicationBundle
+    /// Message Id
+    private(set) public var messageId:String = UUID().uuidString
+    /// Application BundleID
     public var topic:String
     /// APNS Priority 5 or 10
     public var priority:Int
