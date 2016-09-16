@@ -62,7 +62,7 @@ public enum APNServiceErrorReason:String,CustomStringConvertible {
         }
     }
     
-    public static func getServiceReasonByString(str:String) -> (APNServiceErrorReason, String) {
+    public static func getServiceReasonBy(str:String) -> (APNServiceErrorReason, String) {
         let reason = APNServiceErrorReason(rawValue: str)!
         return (reason, reason.getReasonDescription())
     }
@@ -78,7 +78,7 @@ public struct APNServiceResponse {
     public var apnsId:String?
 }
 
-public enum APNServiceStatus: ErrorProtocol {
+public enum APNServiceStatus: Error {
     case success
     case badRequest
     case badCertitficate
@@ -89,7 +89,7 @@ public enum APNServiceStatus: ErrorProtocol {
     case internalServerError
     case serverShutingDownOrUnavailable
     
-    public static func checkStatusCode(response:HTTPURLResponse) -> (Int, APNServiceStatus) {
+    public static func statusCodeFrom(response:HTTPURLResponse) -> (Int, APNServiceStatus) {
         switch response.statusCode {
         case 400:
             return (response.statusCode,APNServiceStatus.badRequest)
@@ -115,7 +115,7 @@ public enum APNServiceStatus: ErrorProtocol {
 /// Apple Push Notification Message
 public struct ApplePushMessage {
     /// Message Id
-    private(set) public var messageId:String = UUID().uuidString
+    fileprivate(set) public var messageId:String = UUID().uuidString
     /// Application BundleID
     public var topic:String
     /// APNS Priority 5 or 10
@@ -133,7 +133,7 @@ public struct ApplePushMessage {
     /// Response Clousure
     public var responseBlock:((APNServiceResponse) -> ())?
     /// Network error Clousure
-    public var networkError:((NSError?)->())?
+    public var networkError:((Error?)->())?
     /// Custom UrlSession
     public var session:URLSession?
     /// Send current message
@@ -142,7 +142,7 @@ public struct ApplePushMessage {
     ///
     /// - returns: URLSessionDataTask
     public func send() throws -> URLSessionDataTask? {
-        return try APNSNetwork(session:session).sendPush(pushMessage: self)
+        return try APNSNetwork(session:session).sendPushWith(message: self)
     }
     /// Send current message with custom URLSession
     ///
@@ -151,15 +151,15 @@ public struct ApplePushMessage {
     /// - throws: Method can throw error if payload data isn't parse.
     ///
     /// - returns: URLSessionDataTask
-    public func send(session:URLSession?) throws -> URLSessionDataTask? {
-        return try APNSNetwork(session:session).sendPush(pushMessage: self)
+    public func sendWith(session:URLSession?) throws -> URLSessionDataTask? {
+        return try APNSNetwork(session:session).sendPushWith(message: self)
     }
 }
 
 
-public class APNSNetwork:NSObject {
-    private var secIdentity:SecIdentity?
-    static private var session:URLSession?
+open class APNSNetwork:NSObject {
+    fileprivate var secIdentity:SecIdentity?
+    static fileprivate var session:URLSession?
     public convenience override init() {
         self.init(session:nil)
     }
@@ -167,20 +167,28 @@ public class APNSNetwork:NSObject {
     public init(session:URLSession?) {
         super.init()
         guard let session = session else {
-            APNSNetwork.session = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            APNSNetwork.session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
             return
         }
         APNSNetwork.session = session
     }
 
     
-    public func sendPush(pushMessage:ApplePushMessage) throws -> URLSessionDataTask?  {
-        return try sendPush(topic: pushMessage.topic, priority: pushMessage.priority, payload: pushMessage.payload, deviceToken: pushMessage.deviceToken, certificatePath: pushMessage.certificatePath, passphrase: pushMessage.passphrase, sandbox: pushMessage.sandbox, responseBlock:   pushMessage.responseBlock, networkError: pushMessage.networkError)
+    open func sendPushWith(message:ApplePushMessage) throws -> URLSessionDataTask?  {
+        return try sendPushWith(topic: message.topic,
+                                priority: message.priority,
+                                payload: message.payload,
+                                deviceToken: message.deviceToken,
+                                certificatePath: message.certificatePath,
+                                passphrase: message.passphrase,
+                                sandbox: message.sandbox,
+                                responseBlock: message.responseBlock,
+                                networkError: message.networkError)
     }
     
-    internal func sendPush(topic:String, priority:Int, payload:Dictionary<String,AnyObject>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> ())?, networkError:((NSError?)->())?) throws -> URLSessionDataTask? {
+    internal func sendPushWith(topic:String, priority:Int, payload:Dictionary<String,Any>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool, responseBlock:((APNServiceResponse) -> ())?, networkError:((Error?)->())?) throws -> URLSessionDataTask? {
         
-        let url = getServiceURL(sandbox, token: deviceToken)
+        let url = serviceURLFor(sandbox: sandbox, token: deviceToken)
         var request = URLRequest(url: url)
         
         guard let ind = getIdentityWith(certificatePath: certificatePath, passphrase: passphrase) else {
@@ -205,14 +213,19 @@ public class APNSNetwork:NSObject {
                 return
             }
             
-            let (statusCode, status) = APNServiceStatus.checkStatusCode(response: response)
+            let (statusCode, status) = APNServiceStatus.statusCodeFrom(response: response)
             let httpResponse = response
             let apnsId = httpResponse.allHeaderFields["apns-id"] as? String
             var responseStatus = APNServiceResponse(serviceStatus: (statusCode, status), serviceErrorReason: nil, apnsId: apnsId)
             
             guard status == .success else {
-                let json = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0))
-                let serviceReason = APNServiceErrorReason(rawValue: (json["reason"] as! String))
+                let json = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0))
+                guard let js = json as? Dictionary<String,Any>,
+                    let reason = js["reason"] as? String
+                    else {
+                        return
+                    }
+                let serviceReason = APNServiceErrorReason(rawValue: reason)
                 responseStatus.serviceErrorReason = serviceReason
                 responseBlock?(responseStatus)
                 return
@@ -226,7 +239,7 @@ public class APNSNetwork:NSObject {
     }
 }
 
-extension APNSNetwork:URLSessionDelegate {
+extension APNSNetwork: URLSessionDelegate {
     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: (Foundation.URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
         var cert : SecCertificate?
@@ -242,7 +255,7 @@ extension APNSNetwork {
         let key : String = kSecImportExportPassphrase as String
         let options = [key : passphrase]
         var items : CFArray?
-        let ossStatus = SecPKCS12Import(PKCS12Data!, options, &items)
+        let ossStatus = SecPKCS12Import(PKCS12Data! as CFData, options as CFDictionary, &items)
         guard ossStatus == errSecSuccess else {
             return nil
         }
@@ -256,7 +269,7 @@ extension APNSNetwork {
         return nil
     }
     
-    private func getServiceURL(_ sandbox:Bool, token:String) -> URL {
+    fileprivate func serviceURLFor(sandbox:Bool, token:String) -> URL {
         var serviceStrUrl:String?
         switch sandbox {
         case true: serviceStrUrl = "https://api.development.push.apple.com:443/3/device/"

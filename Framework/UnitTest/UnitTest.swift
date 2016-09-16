@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import APNS
+import APNS
 class UnitTest: XCTestCase {
     var expectation:XCTestExpectation = XCTestExpectation()
     override func setUp() {
@@ -58,7 +58,8 @@ class UnitTest: XCTestCase {
         
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
-        let str = Bundle(for:UnitTest.self).pathForResource("cert", ofType: "p12")!
+        let str = Bundle(for:UnitTest.self).path(forResource: "cert", ofType: "p12")!
+        
         var mess = ApplePushMessage(topic: "com.advisa.voipservice",
                              priority: 10,
                              payload: payload,
@@ -94,7 +95,7 @@ class UnitTest: XCTestCase {
         
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
-        let str = Bundle(for:UnitTest.self).pathForResource("cert", ofType: "p12")!
+        let str = Bundle(for:UnitTest.self).path(forResource: "cert", ofType: "p12")!
         var mess = ApplePushMessage(topic: "com.advisa.voipservice",
                                     priority: 10,
                                     payload: payload,
