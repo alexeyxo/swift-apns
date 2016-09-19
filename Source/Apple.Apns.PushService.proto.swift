@@ -8,67 +8,9 @@ import ProtocolBuffers
 
 public struct Apple { public struct Apns { }}
 
-public func == (lhs: Apple.Apns.ProviderData, rhs: Apple.Apns.ProviderData) -> Bool {
-  if (lhs === rhs) {
-    return true
-  }
-  var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-  fieldCheck = fieldCheck && (lhs.hasBundle == rhs.hasBundle) && (!lhs.hasBundle || lhs.bundle == rhs.bundle)
-  fieldCheck = fieldCheck && (lhs.hasToken == rhs.hasToken) && (!lhs.hasToken || lhs.token == rhs.token)
-  fieldCheck = fieldCheck && (lhs.hasPriority == rhs.hasPriority) && (!lhs.hasPriority || lhs.priority == rhs.priority)
-  fieldCheck = fieldCheck && (lhs.hasPayload == rhs.hasPayload) && (!lhs.hasPayload || lhs.payload == rhs.payload)
-  fieldCheck = fieldCheck && (lhs.hasServiceIdentity == rhs.hasServiceIdentity) && (!lhs.hasServiceIdentity || lhs.serviceIdentity == rhs.serviceIdentity)
-  fieldCheck = fieldCheck && (lhs.hasCertificatePath == rhs.hasCertificatePath) && (!lhs.hasCertificatePath || lhs.certificatePath == rhs.certificatePath)
-  fieldCheck = fieldCheck && (lhs.hasCertificatePassphrase == rhs.hasCertificatePassphrase) && (!lhs.hasCertificatePassphrase || lhs.certificatePassphrase == rhs.certificatePassphrase)
-  fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
-  return fieldCheck
-}
-
-public func == (lhs: Apple.Apns.Response, rhs: Apple.Apns.Response) -> Bool {
-  if (lhs === rhs) {
-    return true
-  }
-  var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-  fieldCheck = fieldCheck && (lhs.hasStatusCode == rhs.hasStatusCode) && (!lhs.hasStatusCode || lhs.statusCode == rhs.statusCode)
-  fieldCheck = fieldCheck && (lhs.hasApnsId == rhs.hasApnsId) && (!lhs.hasApnsId || lhs.apnsId == rhs.apnsId)
-  fieldCheck = fieldCheck && (lhs.hasReason == rhs.hasReason) && (!lhs.hasReason || lhs.reason == rhs.reason)
-  fieldCheck = fieldCheck && (lhs.hasReasonDescription == rhs.hasReasonDescription) && (!lhs.hasReasonDescription || lhs.reasonDescription == rhs.reasonDescription)
-  fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
-  return fieldCheck
-}
-
-public func == (lhs: Apple.Apns.Push, rhs: Apple.Apns.Push) -> Bool {
-  if (lhs === rhs) {
-    return true
-  }
-  var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-  fieldCheck = fieldCheck && (lhs.hasAps == rhs.hasAps) && (!lhs.hasAps || lhs.aps == rhs.aps)
-  fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
-  return fieldCheck
-}
-
-public func == (lhs: Apple.Apns.Push.Aps, rhs: Apple.Apns.Push.Aps) -> Bool {
-  if (lhs === rhs) {
-    return true
-  }
-  var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-  fieldCheck = fieldCheck && (lhs.hasAlert == rhs.hasAlert) && (!lhs.hasAlert || lhs.alert == rhs.alert)
-  fieldCheck = fieldCheck && (lhs.hasSound == rhs.hasSound) && (!lhs.hasSound || lhs.sound == rhs.sound)
-  fieldCheck = fieldCheck && (lhs.hasBadge == rhs.hasBadge) && (!lhs.hasBadge || lhs.badge == rhs.badge)
-  fieldCheck = fieldCheck && (lhs.hasContentAvailable == rhs.hasContentAvailable) && (!lhs.hasContentAvailable || lhs.contentAvailable == rhs.contentAvailable)
-  fieldCheck = fieldCheck && (lhs.hasCategory == rhs.hasCategory) && (!lhs.hasCategory || lhs.category == rhs.category)
-  fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
-  return fieldCheck
-}
-
 public extension Apple.Apns {
   public struct PushServiceRoot {
-    public static var sharedInstance : PushServiceRoot {
-     struct Static {
-         static let instance : PushServiceRoot = PushServiceRoot()
-     }
-     return Static.instance
-    }
+    public static let `default` = PushServiceRoot()
     public var extensionRegistry:ExtensionRegistry
 
     init() {
@@ -79,7 +21,24 @@ public extension Apple.Apns {
     }
   }
 
-  final public class ProviderData : GeneratedMessage, GeneratedMessageProtocol {
+  final public class ProviderData : GeneratedMessage {
+
+    public static func == (lhs: Apple.Apns.ProviderData, rhs: Apple.Apns.ProviderData) -> Bool {
+      if (lhs === rhs) {
+        return true
+      }
+      var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+      fieldCheck = fieldCheck && (lhs.hasBundle == rhs.hasBundle) && (!lhs.hasBundle || lhs.bundle == rhs.bundle)
+      fieldCheck = fieldCheck && (lhs.hasToken == rhs.hasToken) && (!lhs.hasToken || lhs.token == rhs.token)
+      fieldCheck = fieldCheck && (lhs.hasPriority == rhs.hasPriority) && (!lhs.hasPriority || lhs.priority == rhs.priority)
+      fieldCheck = fieldCheck && (lhs.hasPayload == rhs.hasPayload) && (!lhs.hasPayload || lhs.payload == rhs.payload)
+      fieldCheck = fieldCheck && (lhs.hasServiceIdentity == rhs.hasServiceIdentity) && (!lhs.hasServiceIdentity || lhs.serviceIdentity == rhs.serviceIdentity)
+      fieldCheck = fieldCheck && (lhs.hasCertificatePath == rhs.hasCertificatePath) && (!lhs.hasCertificatePath || lhs.certificatePath == rhs.certificatePath)
+      fieldCheck = fieldCheck && (lhs.hasCertificatePassphrase == rhs.hasCertificatePassphrase) && (!lhs.hasCertificatePassphrase || lhs.certificatePassphrase == rhs.certificatePassphrase)
+      fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+      return fieldCheck
+    }
+
 
 
       //Enum type declaration start 
@@ -103,34 +62,34 @@ public extension Apple.Apns {
         public var debugDescription:String { return getDescription() }
         public var description:String { return getDescription() }
         private func getDescription() -> String { 
-            switch self {
-                case .production: return ".production"
-                case .development: return ".development"
-            }
+          switch self {
+          case .production: return ".production"
+          case .development: return ".development"
+          }
         }
       }
 
       //Enum type declaration end 
 
-    public private(set) var bundle:String = ""
+    public fileprivate(set) var bundle:String = ""
+    public fileprivate(set) var hasBundle:Bool = false
 
-    public private(set) var hasBundle:Bool = false
-    public private(set) var token:String = ""
+    public fileprivate(set) var token:String = ""
+    public fileprivate(set) var hasToken:Bool = false
 
-    public private(set) var hasToken:Bool = false
-    public private(set) var priority:UInt32 = UInt32(0)
+    public fileprivate(set) var priority:UInt32 = UInt32(0)
+    public fileprivate(set) var hasPriority:Bool = false
 
-    public private(set) var hasPriority:Bool = false
-    public private(set) var payload:Apple.Apns.Push!
-    public private(set) var hasPayload:Bool = false
-    public private(set) var serviceIdentity:Apple.Apns.ProviderData.Identity = Apple.Apns.ProviderData.Identity.production
-    public private(set) var hasServiceIdentity:Bool = false
-    public private(set) var certificatePath:String = ""
+    public fileprivate(set) var payload:Apple.Apns.Push!
+    public fileprivate(set) var hasPayload:Bool = false
+    public fileprivate(set) var serviceIdentity:Apple.Apns.ProviderData.Identity = Apple.Apns.ProviderData.Identity.production
+    public fileprivate(set) var hasServiceIdentity:Bool = false
+    public fileprivate(set) var certificatePath:String = ""
+    public fileprivate(set) var hasCertificatePath:Bool = false
 
-    public private(set) var hasCertificatePath:Bool = false
-    public private(set) var certificatePassphrase:String = ""
+    public fileprivate(set) var certificatePassphrase:String = ""
+    public fileprivate(set) var hasCertificatePassphrase:Bool = false
 
-    public private(set) var hasCertificatePassphrase:Bool = false
     required public init() {
          super.init()
     }
@@ -195,44 +154,16 @@ public extension Apple.Apns {
       memoizedSerializedSize = serialize_size
       return serialize_size
     }
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.ProviderData> {
-      var mergedArray = Array<Apple.Apns.ProviderData>()
-      while let value = try parseDelimitedFrom(inputStream: inputStream) {
-        mergedArray.append(value)
-      }
-      return mergedArray
-    }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.ProviderData? {
-      return try Apple.Apns.ProviderData.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
-    }
-    public class func parseFrom(data: Data) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.sharedInstance.extensionRegistry).build()
-    }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(inputStream: inputStream).build()
-    }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(codedInputStream: codedInputStream).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
-      return try Apple.Apns.ProviderData.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
-    }
     public class func getBuilder() -> Apple.Apns.ProviderData.Builder {
       return Apple.Apns.ProviderData.classBuilder() as! Apple.Apns.ProviderData.Builder
     }
     public func getBuilder() -> Apple.Apns.ProviderData.Builder {
       return classBuilder() as! Apple.Apns.ProviderData.Builder
     }
-    override public class func classBuilder() -> MessageBuilder {
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.ProviderData.Builder()
     }
-    override public func classBuilder() -> MessageBuilder {
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.ProviderData.Builder()
     }
     public func toBuilder() throws -> Apple.Apns.ProviderData.Builder {
@@ -241,12 +172,12 @@ public extension Apple.Apns {
     public class func builderWithPrototype(prototype:Apple.Apns.ProviderData) throws -> Apple.Apns.ProviderData.Builder {
       return try Apple.Apns.ProviderData.Builder().mergeFrom(other:prototype)
     }
-    override public func encode() throws -> Dictionary<String,AnyObject> {
+    override public func encode() throws -> Dictionary<String,Any> {
       guard isInitialized() else {
         throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
       }
 
-      var jsonMap:Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
+      var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
       if hasBundle {
         jsonMap["bundle"] = bundle
       }
@@ -254,7 +185,7 @@ public extension Apple.Apns {
         jsonMap["token"] = token
       }
       if hasPriority {
-        jsonMap["priority"] = NSNumber(value:priority)
+        jsonMap["priority"] = priority
       }
       if hasPayload {
         jsonMap["payload"] = try payload.encode()
@@ -270,7 +201,7 @@ public extension Apple.Apns {
       }
       return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.ProviderData {
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.ProviderData {
       return try Apple.Apns.ProviderData.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
     override class public func fromJSON(data:Data) throws -> Apple.Apns.ProviderData {
@@ -346,13 +277,10 @@ public extension Apple.Apns {
     override public func className() -> String {
         return "Apple.Apns.ProviderData"
     }
-    override public func classMetaType() -> GeneratedMessage.Type {
-        return Apple.Apns.ProviderData.self
-    }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-      private var builderResult:Apple.Apns.ProviderData = Apple.Apns.ProviderData()
+      fileprivate var builderResult:Apple.Apns.ProviderData = Apple.Apns.ProviderData()
       public func getMessage() -> Apple.Apns.ProviderData {
           return builderResult
       }
@@ -374,10 +302,12 @@ public extension Apple.Apns {
                builderResult.bundle = value
            }
       }
+      @discardableResult
       public func setBundle(_ value:String) -> Apple.Apns.ProviderData.Builder {
         self.bundle = value
         return self
       }
+      @discardableResult
       public func clearBundle() -> Apple.Apns.ProviderData.Builder{
            builderResult.hasBundle = false
            builderResult.bundle = ""
@@ -397,10 +327,12 @@ public extension Apple.Apns {
                builderResult.token = value
            }
       }
+      @discardableResult
       public func setToken(_ value:String) -> Apple.Apns.ProviderData.Builder {
         self.token = value
         return self
       }
+      @discardableResult
       public func clearToken() -> Apple.Apns.ProviderData.Builder{
            builderResult.hasToken = false
            builderResult.token = ""
@@ -420,10 +352,12 @@ public extension Apple.Apns {
                builderResult.priority = value
            }
       }
+      @discardableResult
       public func setPriority(_ value:UInt32) -> Apple.Apns.ProviderData.Builder {
         self.priority = value
         return self
       }
+      @discardableResult
       public func clearPriority() -> Apple.Apns.ProviderData.Builder{
            builderResult.hasPriority = false
            builderResult.priority = UInt32(0)
@@ -446,7 +380,7 @@ public extension Apple.Apns {
                builderResult.payload = value
            }
       }
-      private var payloadBuilder_:Apple.Apns.Push.Builder! {
+      fileprivate var payloadBuilder_:Apple.Apns.Push.Builder! {
            didSet {
               builderResult.hasPayload = true
            }
@@ -456,15 +390,17 @@ public extension Apple.Apns {
            payloadBuilder_ = Apple.Apns.Push.Builder()
            builderResult.payload = payloadBuilder_.getMessage()
            if payload != nil {
-              _ = try! payloadBuilder_.mergeFrom(other: payload)
+              try! payloadBuilder_.mergeFrom(other: payload)
            }
         }
         return payloadBuilder_
       }
+      @discardableResult
       public func setPayload(_ value:Apple.Apns.Push!) -> Apple.Apns.ProviderData.Builder {
         self.payload = value
         return self
       }
+      @discardableResult
       public func mergePayload(value:Apple.Apns.Push) throws -> Apple.Apns.ProviderData.Builder {
         if builderResult.hasPayload {
           builderResult.payload = try Apple.Apns.Push.builderWithPrototype(prototype:builderResult.payload).mergeFrom(other: value).buildPartial()
@@ -474,6 +410,7 @@ public extension Apple.Apns {
         builderResult.hasPayload = true
         return self
       }
+      @discardableResult
       public func clearPayload() -> Apple.Apns.ProviderData.Builder {
         payloadBuilder_ = nil
         builderResult.hasPayload = false
@@ -494,10 +431,12 @@ public extension Apple.Apns {
                 builderResult.serviceIdentity = value
             }
         }
+      @discardableResult
         public func setServiceIdentity(_ value:Apple.Apns.ProviderData.Identity) -> Apple.Apns.ProviderData.Builder {
           self.serviceIdentity = value
           return self
         }
+      @discardableResult
         public func clearServiceIdentity() -> Apple.Apns.ProviderData.Builder {
            builderResult.hasServiceIdentity = false
            builderResult.serviceIdentity = .production
@@ -517,10 +456,12 @@ public extension Apple.Apns {
                builderResult.certificatePath = value
            }
       }
+      @discardableResult
       public func setCertificatePath(_ value:String) -> Apple.Apns.ProviderData.Builder {
         self.certificatePath = value
         return self
       }
+      @discardableResult
       public func clearCertificatePath() -> Apple.Apns.ProviderData.Builder{
            builderResult.hasCertificatePath = false
            builderResult.certificatePath = ""
@@ -540,10 +481,12 @@ public extension Apple.Apns {
                builderResult.certificatePassphrase = value
            }
       }
+      @discardableResult
       public func setCertificatePassphrase(_ value:String) -> Apple.Apns.ProviderData.Builder {
         self.certificatePassphrase = value
         return self
       }
+      @discardableResult
       public func clearCertificatePassphrase() -> Apple.Apns.ProviderData.Builder{
            builderResult.hasCertificatePassphrase = false
            builderResult.certificatePassphrase = ""
@@ -554,6 +497,7 @@ public extension Apple.Apns {
               return builderResult
            }
       }
+      @discardableResult
       override public func clear() -> Apple.Apns.ProviderData.Builder {
         builderResult = Apple.Apns.ProviderData()
         return self
@@ -569,6 +513,7 @@ public extension Apple.Apns {
         let returnMe:Apple.Apns.ProviderData = builderResult
         return returnMe
       }
+      @discardableResult
       public func mergeFrom(other:Apple.Apns.ProviderData) throws -> Apple.Apns.ProviderData.Builder {
         if other == Apple.Apns.ProviderData() {
          return self
@@ -583,7 +528,7 @@ public extension Apple.Apns {
              priority = other.priority
         }
         if (other.hasPayload) {
-            _ = try mergePayload(value: other.payload)
+            try mergePayload(value: other.payload)
         }
         if other.hasServiceIdentity {
              serviceIdentity = other.serviceIdentity
@@ -594,12 +539,14 @@ public extension Apple.Apns {
         if other.hasCertificatePassphrase {
              certificatePassphrase = other.certificatePassphrase
         }
-        _ = try merge(unknownField: other.unknownFields)
+        try merge(unknownField: other.unknownFields)
         return self
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.ProviderData.Builder {
            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData.Builder {
         let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
         while (true) {
@@ -621,7 +568,7 @@ public extension Apple.Apns {
           case 34:
             let subBuilder:Apple.Apns.Push.Builder = Apple.Apns.Push.Builder()
             if hasPayload {
-              _ = try subBuilder.mergeFrom(other: payload)
+              try subBuilder.mergeFrom(other: payload)
             }
             try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
             payload = subBuilder.buildPartial()
@@ -631,7 +578,7 @@ public extension Apple.Apns {
             if let enumsserviceIdentity = Apple.Apns.ProviderData.Identity(rawValue:valueIntserviceIdentity){
                  serviceIdentity = enumsserviceIdentity
             } else {
-                 _ = try unknownFieldsBuilder.mergeVarintField(fieldNumber: 5, value:Int64(valueIntserviceIdentity))
+                 try unknownFieldsBuilder.mergeVarintField(fieldNumber: 5, value:Int64(valueIntserviceIdentity))
             }
 
           case 50:
@@ -648,7 +595,7 @@ public extension Apple.Apns {
           }
         }
       }
-      override class public func decodeToBuilder(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.ProviderData.Builder {
+      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.ProviderData.Builder {
         let resultDecodedBuilder = Apple.Apns.ProviderData.Builder()
         if let jsonValueBundle = jsonMap["bundle"] as? String {
           resultDecodedBuilder.bundle = jsonValueBundle
@@ -656,10 +603,10 @@ public extension Apple.Apns {
         if let jsonValueToken = jsonMap["token"] as? String {
           resultDecodedBuilder.token = jsonValueToken
         }
-        if let jsonValuePriority = jsonMap["priority"] as? NSNumber {
-          resultDecodedBuilder.priority = jsonValuePriority.uint32Value
+        if let jsonValuePriority = jsonMap["priority"] as? UInt32 {
+          resultDecodedBuilder.priority = jsonValuePriority
         }
-        if let jsonValuePayload = jsonMap["payload"] as? Dictionary<String,AnyObject> {
+        if let jsonValuePayload = jsonMap["payload"] as? Dictionary<String,Any> {
           resultDecodedBuilder.payload = try Apple.Apns.Push.Builder.decodeToBuilder(jsonMap:jsonValuePayload).build()
 
         }
@@ -676,7 +623,7 @@ public extension Apple.Apns {
       }
       override class public func fromJSONToBuilder(data:Data) throws -> Apple.Apns.ProviderData.Builder {
         let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
-        guard let jsDataCast = jsonData as? Dictionary<String,AnyObject> else {
+        guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
           throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
         }
         return try Apple.Apns.ProviderData.Builder.decodeToBuilder(jsonMap:jsDataCast)
@@ -685,7 +632,21 @@ public extension Apple.Apns {
 
   }
 
-  final public class Response : GeneratedMessage, GeneratedMessageProtocol {
+  final public class Response : GeneratedMessage {
+
+    public static func == (lhs: Apple.Apns.Response, rhs: Apple.Apns.Response) -> Bool {
+      if (lhs === rhs) {
+        return true
+      }
+      var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+      fieldCheck = fieldCheck && (lhs.hasStatusCode == rhs.hasStatusCode) && (!lhs.hasStatusCode || lhs.statusCode == rhs.statusCode)
+      fieldCheck = fieldCheck && (lhs.hasApnsId == rhs.hasApnsId) && (!lhs.hasApnsId || lhs.apnsId == rhs.apnsId)
+      fieldCheck = fieldCheck && (lhs.hasReason == rhs.hasReason) && (!lhs.hasReason || lhs.reason == rhs.reason)
+      fieldCheck = fieldCheck && (lhs.hasReasonDescription == rhs.hasReasonDescription) && (!lhs.hasReasonDescription || lhs.reasonDescription == rhs.reasonDescription)
+      fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+      return fieldCheck
+    }
+
     //200 - Success
     //400 - Bad request
     //403 - There was an error with the certificate.
@@ -695,18 +656,18 @@ public extension Apple.Apns {
     //429 - The server received too many requests for the same device token. 
     //500 - Internal server error
     //503 - The server is shutting down and unavailable.
-    public private(set) var statusCode:Int32 = Int32(0)
+    public fileprivate(set) var statusCode:Int32 = Int32(0)
+    public fileprivate(set) var hasStatusCode:Bool = false
 
-    public private(set) var hasStatusCode:Bool = false
-    public private(set) var apnsId:String = ""
+    public fileprivate(set) var apnsId:String = ""
+    public fileprivate(set) var hasApnsId:Bool = false
 
-    public private(set) var hasApnsId:Bool = false
-    public private(set) var reason:String = ""
+    public fileprivate(set) var reason:String = ""
+    public fileprivate(set) var hasReason:Bool = false
 
-    public private(set) var hasReason:Bool = false
-    public private(set) var reasonDescription:String = ""
+    public fileprivate(set) var reasonDescription:String = ""
+    public fileprivate(set) var hasReasonDescription:Bool = false
 
-    public private(set) var hasReasonDescription:Bool = false
     required public init() {
          super.init()
     }
@@ -751,44 +712,16 @@ public extension Apple.Apns {
       memoizedSerializedSize = serialize_size
       return serialize_size
     }
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Response> {
-      var mergedArray = Array<Apple.Apns.Response>()
-      while let value = try parseDelimitedFrom(inputStream: inputStream) {
-        mergedArray.append(value)
-      }
-      return mergedArray
-    }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Response? {
-      return try Apple.Apns.Response.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
-    }
-    public class func parseFrom(data: Data) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.sharedInstance.extensionRegistry).build()
-    }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(inputStream: inputStream).build()
-    }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(codedInputStream: codedInputStream).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
-      return try Apple.Apns.Response.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
-    }
     public class func getBuilder() -> Apple.Apns.Response.Builder {
       return Apple.Apns.Response.classBuilder() as! Apple.Apns.Response.Builder
     }
     public func getBuilder() -> Apple.Apns.Response.Builder {
       return classBuilder() as! Apple.Apns.Response.Builder
     }
-    override public class func classBuilder() -> MessageBuilder {
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.Response.Builder()
     }
-    override public func classBuilder() -> MessageBuilder {
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.Response.Builder()
     }
     public func toBuilder() throws -> Apple.Apns.Response.Builder {
@@ -797,14 +730,14 @@ public extension Apple.Apns {
     public class func builderWithPrototype(prototype:Apple.Apns.Response) throws -> Apple.Apns.Response.Builder {
       return try Apple.Apns.Response.Builder().mergeFrom(other:prototype)
     }
-    override public func encode() throws -> Dictionary<String,AnyObject> {
+    override public func encode() throws -> Dictionary<String,Any> {
       guard isInitialized() else {
         throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
       }
 
-      var jsonMap:Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
+      var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
       if hasStatusCode {
-        jsonMap["statusCode"] = NSNumber(value:statusCode)
+        jsonMap["statusCode"] = statusCode
       }
       if hasApnsId {
         jsonMap["apnsId"] = apnsId
@@ -817,7 +750,7 @@ public extension Apple.Apns {
       }
       return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Response {
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Response {
       return try Apple.Apns.Response.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
     override class public func fromJSON(data:Data) throws -> Apple.Apns.Response {
@@ -869,13 +802,10 @@ public extension Apple.Apns {
     override public func className() -> String {
         return "Apple.Apns.Response"
     }
-    override public func classMetaType() -> GeneratedMessage.Type {
-        return Apple.Apns.Response.self
-    }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-      private var builderResult:Apple.Apns.Response = Apple.Apns.Response()
+      fileprivate var builderResult:Apple.Apns.Response = Apple.Apns.Response()
       public func getMessage() -> Apple.Apns.Response {
           return builderResult
       }
@@ -897,10 +827,12 @@ public extension Apple.Apns {
                builderResult.statusCode = value
            }
       }
+      @discardableResult
       public func setStatusCode(_ value:Int32) -> Apple.Apns.Response.Builder {
         self.statusCode = value
         return self
       }
+      @discardableResult
       public func clearStatusCode() -> Apple.Apns.Response.Builder{
            builderResult.hasStatusCode = false
            builderResult.statusCode = Int32(0)
@@ -920,10 +852,12 @@ public extension Apple.Apns {
                builderResult.apnsId = value
            }
       }
+      @discardableResult
       public func setApnsId(_ value:String) -> Apple.Apns.Response.Builder {
         self.apnsId = value
         return self
       }
+      @discardableResult
       public func clearApnsId() -> Apple.Apns.Response.Builder{
            builderResult.hasApnsId = false
            builderResult.apnsId = ""
@@ -943,10 +877,12 @@ public extension Apple.Apns {
                builderResult.reason = value
            }
       }
+      @discardableResult
       public func setReason(_ value:String) -> Apple.Apns.Response.Builder {
         self.reason = value
         return self
       }
+      @discardableResult
       public func clearReason() -> Apple.Apns.Response.Builder{
            builderResult.hasReason = false
            builderResult.reason = ""
@@ -966,10 +902,12 @@ public extension Apple.Apns {
                builderResult.reasonDescription = value
            }
       }
+      @discardableResult
       public func setReasonDescription(_ value:String) -> Apple.Apns.Response.Builder {
         self.reasonDescription = value
         return self
       }
+      @discardableResult
       public func clearReasonDescription() -> Apple.Apns.Response.Builder{
            builderResult.hasReasonDescription = false
            builderResult.reasonDescription = ""
@@ -980,6 +918,7 @@ public extension Apple.Apns {
               return builderResult
            }
       }
+      @discardableResult
       override public func clear() -> Apple.Apns.Response.Builder {
         builderResult = Apple.Apns.Response()
         return self
@@ -995,6 +934,7 @@ public extension Apple.Apns {
         let returnMe:Apple.Apns.Response = builderResult
         return returnMe
       }
+      @discardableResult
       public func mergeFrom(other:Apple.Apns.Response) throws -> Apple.Apns.Response.Builder {
         if other == Apple.Apns.Response() {
          return self
@@ -1011,12 +951,14 @@ public extension Apple.Apns {
         if other.hasReasonDescription {
              reasonDescription = other.reasonDescription
         }
-        _ = try merge(unknownField: other.unknownFields)
+        try merge(unknownField: other.unknownFields)
         return self
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Response.Builder {
            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response.Builder {
         let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
         while (true) {
@@ -1046,10 +988,10 @@ public extension Apple.Apns {
           }
         }
       }
-      override class public func decodeToBuilder(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Response.Builder {
+      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Response.Builder {
         let resultDecodedBuilder = Apple.Apns.Response.Builder()
-        if let jsonValueStatusCode = jsonMap["statusCode"] as? NSNumber {
-          resultDecodedBuilder.statusCode = jsonValueStatusCode.int32Value
+        if let jsonValueStatusCode = jsonMap["statusCode"] as? Int32 {
+          resultDecodedBuilder.statusCode = jsonValueStatusCode
         }
         if let jsonValueApnsId = jsonMap["apnsId"] as? String {
           resultDecodedBuilder.apnsId = jsonValueApnsId
@@ -1064,7 +1006,7 @@ public extension Apple.Apns {
       }
       override class public func fromJSONToBuilder(data:Data) throws -> Apple.Apns.Response.Builder {
         let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
-        guard let jsDataCast = jsonData as? Dictionary<String,AnyObject> else {
+        guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
           throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
         }
         return try Apple.Apns.Response.Builder.decodeToBuilder(jsonMap:jsDataCast)
@@ -1073,27 +1015,56 @@ public extension Apple.Apns {
 
   }
 
-  final public class Push : GeneratedMessage, GeneratedMessageProtocol {
+  final public class Push : GeneratedMessage {
+
+    public static func == (lhs: Apple.Apns.Push, rhs: Apple.Apns.Push) -> Bool {
+      if (lhs === rhs) {
+        return true
+      }
+      var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+      fieldCheck = fieldCheck && (lhs.hasAps == rhs.hasAps) && (!lhs.hasAps || lhs.aps == rhs.aps)
+      fieldCheck = fieldCheck && (lhs.hasImage == rhs.hasImage) && (!lhs.hasImage || lhs.image == rhs.image)
+      fieldCheck = fieldCheck && (lhs.hasVideo == rhs.hasVideo) && (!lhs.hasVideo || lhs.video == rhs.video)
+      fieldCheck = fieldCheck && (lhs.hasAudio == rhs.hasAudio) && (!lhs.hasAudio || lhs.audio == rhs.audio)
+      fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+      return fieldCheck
+    }
+
 
 
     //Nested type declaration start
 
-      final public class Aps : GeneratedMessage, GeneratedMessageProtocol {
-        public private(set) var alert:String = ""
+      final public class Aps : GeneratedMessage {
 
-        public private(set) var hasAlert:Bool = false
-        public private(set) var sound:String = ""
+        public static func == (lhs: Apple.Apns.Push.Aps, rhs: Apple.Apns.Push.Aps) -> Bool {
+          if (lhs === rhs) {
+            return true
+          }
+          var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+          fieldCheck = fieldCheck && (lhs.hasAlert == rhs.hasAlert) && (!lhs.hasAlert || lhs.alert == rhs.alert)
+          fieldCheck = fieldCheck && (lhs.hasSound == rhs.hasSound) && (!lhs.hasSound || lhs.sound == rhs.sound)
+          fieldCheck = fieldCheck && (lhs.hasBadge == rhs.hasBadge) && (!lhs.hasBadge || lhs.badge == rhs.badge)
+          fieldCheck = fieldCheck && (lhs.hasContentAvailable == rhs.hasContentAvailable) && (!lhs.hasContentAvailable || lhs.contentAvailable == rhs.contentAvailable)
+          fieldCheck = fieldCheck && (lhs.hasCategory == rhs.hasCategory) && (!lhs.hasCategory || lhs.category == rhs.category)
+          fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+          return fieldCheck
+        }
 
-        public private(set) var hasSound:Bool = false
-        public private(set) var badge:Int32 = Int32(0)
+        public fileprivate(set) var alert:String = ""
+        public fileprivate(set) var hasAlert:Bool = false
 
-        public private(set) var hasBadge:Bool = false
-        public private(set) var contentAvailable:Int32 = Int32(0)
+        public fileprivate(set) var sound:String = ""
+        public fileprivate(set) var hasSound:Bool = false
 
-        public private(set) var hasContentAvailable:Bool = false
-        public private(set) var category:String = ""
+        public fileprivate(set) var badge:Int32 = Int32(0)
+        public fileprivate(set) var hasBadge:Bool = false
 
-        public private(set) var hasCategory:Bool = false
+        public fileprivate(set) var contentAvailable:Int32 = Int32(0)
+        public fileprivate(set) var hasContentAvailable:Bool = false
+
+        public fileprivate(set) var category:String = ""
+        public fileprivate(set) var hasCategory:Bool = false
+
         required public init() {
              super.init()
         }
@@ -1144,44 +1115,16 @@ public extension Apple.Apns {
           memoizedSerializedSize = serialize_size
           return serialize_size
         }
-        public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Push.Aps> {
-          var mergedArray = Array<Apple.Apns.Push.Aps>()
-          while let value = try parseDelimitedFrom(inputStream: inputStream) {
-            mergedArray.append(value)
-          }
-          return mergedArray
-        }
-        public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Push.Aps? {
-          return try Apple.Apns.Push.Aps.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
-        }
-        public class func parseFrom(data: Data) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.sharedInstance.extensionRegistry).build()
-        }
-        public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
-        }
-        public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(inputStream: inputStream).build()
-        }
-        public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
-        }
-        public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(codedInputStream: codedInputStream).build()
-        }
-        public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
-          return try Apple.Apns.Push.Aps.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
-        }
         public class func getBuilder() -> Apple.Apns.Push.Aps.Builder {
           return Apple.Apns.Push.Aps.classBuilder() as! Apple.Apns.Push.Aps.Builder
         }
         public func getBuilder() -> Apple.Apns.Push.Aps.Builder {
           return classBuilder() as! Apple.Apns.Push.Aps.Builder
         }
-        override public class func classBuilder() -> MessageBuilder {
+        override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
           return Apple.Apns.Push.Aps.Builder()
         }
-        override public func classBuilder() -> MessageBuilder {
+        override public func classBuilder() -> ProtocolBuffersMessageBuilder {
           return Apple.Apns.Push.Aps.Builder()
         }
         public func toBuilder() throws -> Apple.Apns.Push.Aps.Builder {
@@ -1190,12 +1133,12 @@ public extension Apple.Apns {
         public class func builderWithPrototype(prototype:Apple.Apns.Push.Aps) throws -> Apple.Apns.Push.Aps.Builder {
           return try Apple.Apns.Push.Aps.Builder().mergeFrom(other:prototype)
         }
-        override public func encode() throws -> Dictionary<String,AnyObject> {
+        override public func encode() throws -> Dictionary<String,Any> {
           guard isInitialized() else {
             throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
           }
 
-          var jsonMap:Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
+          var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
           if hasAlert {
             jsonMap["alert"] = alert
           }
@@ -1203,17 +1146,17 @@ public extension Apple.Apns {
             jsonMap["sound"] = sound
           }
           if hasBadge {
-            jsonMap["badge"] = NSNumber(value:badge)
+            jsonMap["badge"] = badge
           }
           if hasContentAvailable {
-            jsonMap["contentAvailable"] = NSNumber(value:contentAvailable)
+            jsonMap["contentAvailable"] = contentAvailable
           }
           if hasCategory {
             jsonMap["category"] = category
           }
           return jsonMap
         }
-        override class public func decode(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Push.Aps {
+        override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Aps {
           return try Apple.Apns.Push.Aps.Builder.decodeToBuilder(jsonMap:jsonMap).build()
         }
         override class public func fromJSON(data:Data) throws -> Apple.Apns.Push.Aps {
@@ -1271,13 +1214,10 @@ public extension Apple.Apns {
         override public func className() -> String {
             return "Apple.Apns.Push.Aps"
         }
-        override public func classMetaType() -> GeneratedMessage.Type {
-            return Apple.Apns.Push.Aps.self
-        }
         //Meta information declaration end
 
         final public class Builder : GeneratedMessageBuilder {
-          private var builderResult:Apple.Apns.Push.Aps = Apple.Apns.Push.Aps()
+          fileprivate var builderResult:Apple.Apns.Push.Aps = Apple.Apns.Push.Aps()
           public func getMessage() -> Apple.Apns.Push.Aps {
               return builderResult
           }
@@ -1299,10 +1239,12 @@ public extension Apple.Apns {
                    builderResult.alert = value
                }
           }
+          @discardableResult
           public func setAlert(_ value:String) -> Apple.Apns.Push.Aps.Builder {
             self.alert = value
             return self
           }
+          @discardableResult
           public func clearAlert() -> Apple.Apns.Push.Aps.Builder{
                builderResult.hasAlert = false
                builderResult.alert = ""
@@ -1322,10 +1264,12 @@ public extension Apple.Apns {
                    builderResult.sound = value
                }
           }
+          @discardableResult
           public func setSound(_ value:String) -> Apple.Apns.Push.Aps.Builder {
             self.sound = value
             return self
           }
+          @discardableResult
           public func clearSound() -> Apple.Apns.Push.Aps.Builder{
                builderResult.hasSound = false
                builderResult.sound = ""
@@ -1345,10 +1289,12 @@ public extension Apple.Apns {
                    builderResult.badge = value
                }
           }
+          @discardableResult
           public func setBadge(_ value:Int32) -> Apple.Apns.Push.Aps.Builder {
             self.badge = value
             return self
           }
+          @discardableResult
           public func clearBadge() -> Apple.Apns.Push.Aps.Builder{
                builderResult.hasBadge = false
                builderResult.badge = Int32(0)
@@ -1368,10 +1314,12 @@ public extension Apple.Apns {
                    builderResult.contentAvailable = value
                }
           }
+          @discardableResult
           public func setContentAvailable(_ value:Int32) -> Apple.Apns.Push.Aps.Builder {
             self.contentAvailable = value
             return self
           }
+          @discardableResult
           public func clearContentAvailable() -> Apple.Apns.Push.Aps.Builder{
                builderResult.hasContentAvailable = false
                builderResult.contentAvailable = Int32(0)
@@ -1391,10 +1339,12 @@ public extension Apple.Apns {
                    builderResult.category = value
                }
           }
+          @discardableResult
           public func setCategory(_ value:String) -> Apple.Apns.Push.Aps.Builder {
             self.category = value
             return self
           }
+          @discardableResult
           public func clearCategory() -> Apple.Apns.Push.Aps.Builder{
                builderResult.hasCategory = false
                builderResult.category = ""
@@ -1405,6 +1355,7 @@ public extension Apple.Apns {
                   return builderResult
                }
           }
+          @discardableResult
           override public func clear() -> Apple.Apns.Push.Aps.Builder {
             builderResult = Apple.Apns.Push.Aps()
             return self
@@ -1420,6 +1371,7 @@ public extension Apple.Apns {
             let returnMe:Apple.Apns.Push.Aps = builderResult
             return returnMe
           }
+          @discardableResult
           public func mergeFrom(other:Apple.Apns.Push.Aps) throws -> Apple.Apns.Push.Aps.Builder {
             if other == Apple.Apns.Push.Aps() {
              return self
@@ -1439,12 +1391,14 @@ public extension Apple.Apns {
             if other.hasCategory {
                  category = other.category
             }
-            _ = try merge(unknownField: other.unknownFields)
+            try merge(unknownField: other.unknownFields)
             return self
           }
+          @discardableResult
           override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push.Aps.Builder {
                return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
           }
+          @discardableResult
           override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps.Builder {
             let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
             while (true) {
@@ -1477,7 +1431,7 @@ public extension Apple.Apns {
               }
             }
           }
-          override class public func decodeToBuilder(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Push.Aps.Builder {
+          class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Aps.Builder {
             let resultDecodedBuilder = Apple.Apns.Push.Aps.Builder()
             if let jsonValueAlert = jsonMap["alert"] as? String {
               resultDecodedBuilder.alert = jsonValueAlert
@@ -1485,11 +1439,11 @@ public extension Apple.Apns {
             if let jsonValueSound = jsonMap["sound"] as? String {
               resultDecodedBuilder.sound = jsonValueSound
             }
-            if let jsonValueBadge = jsonMap["badge"] as? NSNumber {
-              resultDecodedBuilder.badge = jsonValueBadge.int32Value
+            if let jsonValueBadge = jsonMap["badge"] as? Int32 {
+              resultDecodedBuilder.badge = jsonValueBadge
             }
-            if let jsonValueContentAvailable = jsonMap["contentAvailable"] as? NSNumber {
-              resultDecodedBuilder.contentAvailable = jsonValueContentAvailable.int32Value
+            if let jsonValueContentAvailable = jsonMap["contentAvailable"] as? Int32 {
+              resultDecodedBuilder.contentAvailable = jsonValueContentAvailable
             }
             if let jsonValueCategory = jsonMap["category"] as? String {
               resultDecodedBuilder.category = jsonValueCategory
@@ -1498,7 +1452,7 @@ public extension Apple.Apns {
           }
           override class public func fromJSONToBuilder(data:Data) throws -> Apple.Apns.Push.Aps.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
-            guard let jsDataCast = jsonData as? Dictionary<String,AnyObject> else {
+            guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
               throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try Apple.Apns.Push.Aps.Builder.decodeToBuilder(jsonMap:jsDataCast)
@@ -1509,8 +1463,17 @@ public extension Apple.Apns {
 
     //Nested type declaration end
 
-    public private(set) var aps:Apple.Apns.Push.Aps!
-    public private(set) var hasAps:Bool = false
+    public fileprivate(set) var aps:Apple.Apns.Push.Aps!
+    public fileprivate(set) var hasAps:Bool = false
+    public fileprivate(set) var image:String = ""
+    public fileprivate(set) var hasImage:Bool = false
+
+    public fileprivate(set) var video:String = ""
+    public fileprivate(set) var hasVideo:Bool = false
+
+    public fileprivate(set) var audio:String = ""
+    public fileprivate(set) var hasAudio:Bool = false
+
     required public init() {
          super.init()
     }
@@ -1520,6 +1483,15 @@ public extension Apple.Apns {
     override public func writeTo(codedOutputStream: CodedOutputStream) throws {
       if hasAps {
         try codedOutputStream.writeMessage(fieldNumber: 1, value:aps)
+      }
+      if hasImage {
+        try codedOutputStream.writeString(fieldNumber: 2, value:image)
+      }
+      if hasVideo {
+        try codedOutputStream.writeString(fieldNumber: 3, value:video)
+      }
+      if hasAudio {
+        try codedOutputStream.writeString(fieldNumber: 4, value:audio)
       }
       try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
@@ -1535,37 +1507,18 @@ public extension Apple.Apns {
               serialize_size += varSizeaps
           }
       }
+      if hasImage {
+        serialize_size += image.computeStringSize(fieldNumber: 2)
+      }
+      if hasVideo {
+        serialize_size += video.computeStringSize(fieldNumber: 3)
+      }
+      if hasAudio {
+        serialize_size += audio.computeStringSize(fieldNumber: 4)
+      }
       serialize_size += unknownFields.serializedSize()
       memoizedSerializedSize = serialize_size
       return serialize_size
-    }
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Push> {
-      var mergedArray = Array<Apple.Apns.Push>()
-      while let value = try parseDelimitedFrom(inputStream: inputStream) {
-        mergedArray.append(value)
-      }
-      return mergedArray
-    }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Push? {
-      return try Apple.Apns.Push.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
-    }
-    public class func parseFrom(data: Data) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.sharedInstance.extensionRegistry).build()
-    }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(inputStream: inputStream).build()
-    }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(codedInputStream: codedInputStream).build()
-    }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
-      return try Apple.Apns.Push.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
     }
     public class func getBuilder() -> Apple.Apns.Push.Builder {
       return Apple.Apns.Push.classBuilder() as! Apple.Apns.Push.Builder
@@ -1573,10 +1526,10 @@ public extension Apple.Apns {
     public func getBuilder() -> Apple.Apns.Push.Builder {
       return classBuilder() as! Apple.Apns.Push.Builder
     }
-    override public class func classBuilder() -> MessageBuilder {
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.Push.Builder()
     }
-    override public func classBuilder() -> MessageBuilder {
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
       return Apple.Apns.Push.Builder()
     }
     public func toBuilder() throws -> Apple.Apns.Push.Builder {
@@ -1585,18 +1538,27 @@ public extension Apple.Apns {
     public class func builderWithPrototype(prototype:Apple.Apns.Push) throws -> Apple.Apns.Push.Builder {
       return try Apple.Apns.Push.Builder().mergeFrom(other:prototype)
     }
-    override public func encode() throws -> Dictionary<String,AnyObject> {
+    override public func encode() throws -> Dictionary<String,Any> {
       guard isInitialized() else {
         throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
       }
 
-      var jsonMap:Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
+      var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
       if hasAps {
         jsonMap["aps"] = try aps.encode()
       }
+      if hasImage {
+        jsonMap["image"] = image
+      }
+      if hasVideo {
+        jsonMap["video"] = video
+      }
+      if hasAudio {
+        jsonMap["audio"] = audio
+      }
       return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Push {
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push {
       return try Apple.Apns.Push.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
     override class public func fromJSON(data:Data) throws -> Apple.Apns.Push {
@@ -1611,6 +1573,15 @@ public extension Apple.Apns {
         }
         output += "\(indent) }\n"
       }
+      if hasImage {
+        output += "\(indent) image: \(image) \n"
+      }
+      if hasVideo {
+        output += "\(indent) video: \(video) \n"
+      }
+      if hasAudio {
+        output += "\(indent) audio: \(audio) \n"
+      }
       output += unknownFields.getDescription(indent: indent)
       return output
     }
@@ -1621,6 +1592,15 @@ public extension Apple.Apns {
                 if let hashValueaps = aps?.hashValue {
                     hashCode = (hashCode &* 31) &+ hashValueaps
                 }
+            }
+            if hasImage {
+               hashCode = (hashCode &* 31) &+ image.hashValue
+            }
+            if hasVideo {
+               hashCode = (hashCode &* 31) &+ video.hashValue
+            }
+            if hasAudio {
+               hashCode = (hashCode &* 31) &+ audio.hashValue
             }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
@@ -1636,13 +1616,10 @@ public extension Apple.Apns {
     override public func className() -> String {
         return "Apple.Apns.Push"
     }
-    override public func classMetaType() -> GeneratedMessage.Type {
-        return Apple.Apns.Push.self
-    }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-      private var builderResult:Apple.Apns.Push = Apple.Apns.Push()
+      fileprivate var builderResult:Apple.Apns.Push = Apple.Apns.Push()
       public func getMessage() -> Apple.Apns.Push {
           return builderResult
       }
@@ -1667,7 +1644,7 @@ public extension Apple.Apns {
                builderResult.aps = value
            }
       }
-      private var apsBuilder_:Apple.Apns.Push.Aps.Builder! {
+      fileprivate var apsBuilder_:Apple.Apns.Push.Aps.Builder! {
            didSet {
               builderResult.hasAps = true
            }
@@ -1677,15 +1654,17 @@ public extension Apple.Apns {
            apsBuilder_ = Apple.Apns.Push.Aps.Builder()
            builderResult.aps = apsBuilder_.getMessage()
            if aps != nil {
-              _ = try! apsBuilder_.mergeFrom(other: aps)
+              try! apsBuilder_.mergeFrom(other: aps)
            }
         }
         return apsBuilder_
       }
+      @discardableResult
       public func setAps(_ value:Apple.Apns.Push.Aps!) -> Apple.Apns.Push.Builder {
         self.aps = value
         return self
       }
+      @discardableResult
       public func mergeAps(value:Apple.Apns.Push.Aps) throws -> Apple.Apns.Push.Builder {
         if builderResult.hasAps {
           builderResult.aps = try Apple.Apns.Push.Aps.builderWithPrototype(prototype:builderResult.aps).mergeFrom(other: value).buildPartial()
@@ -1695,17 +1674,94 @@ public extension Apple.Apns {
         builderResult.hasAps = true
         return self
       }
+      @discardableResult
       public func clearAps() -> Apple.Apns.Push.Builder {
         apsBuilder_ = nil
         builderResult.hasAps = false
         builderResult.aps = nil
         return self
       }
+      public var hasImage:Bool {
+           get {
+                return builderResult.hasImage
+           }
+      }
+      public var image:String {
+           get {
+                return builderResult.image
+           }
+           set (value) {
+               builderResult.hasImage = true
+               builderResult.image = value
+           }
+      }
+      @discardableResult
+      public func setImage(_ value:String) -> Apple.Apns.Push.Builder {
+        self.image = value
+        return self
+      }
+      @discardableResult
+      public func clearImage() -> Apple.Apns.Push.Builder{
+           builderResult.hasImage = false
+           builderResult.image = ""
+           return self
+      }
+      public var hasVideo:Bool {
+           get {
+                return builderResult.hasVideo
+           }
+      }
+      public var video:String {
+           get {
+                return builderResult.video
+           }
+           set (value) {
+               builderResult.hasVideo = true
+               builderResult.video = value
+           }
+      }
+      @discardableResult
+      public func setVideo(_ value:String) -> Apple.Apns.Push.Builder {
+        self.video = value
+        return self
+      }
+      @discardableResult
+      public func clearVideo() -> Apple.Apns.Push.Builder{
+           builderResult.hasVideo = false
+           builderResult.video = ""
+           return self
+      }
+      public var hasAudio:Bool {
+           get {
+                return builderResult.hasAudio
+           }
+      }
+      public var audio:String {
+           get {
+                return builderResult.audio
+           }
+           set (value) {
+               builderResult.hasAudio = true
+               builderResult.audio = value
+           }
+      }
+      @discardableResult
+      public func setAudio(_ value:String) -> Apple.Apns.Push.Builder {
+        self.audio = value
+        return self
+      }
+      @discardableResult
+      public func clearAudio() -> Apple.Apns.Push.Builder{
+           builderResult.hasAudio = false
+           builderResult.audio = ""
+           return self
+      }
       override public var internalGetResult:GeneratedMessage {
            get {
               return builderResult
            }
       }
+      @discardableResult
       override public func clear() -> Apple.Apns.Push.Builder {
         builderResult = Apple.Apns.Push()
         return self
@@ -1721,19 +1777,31 @@ public extension Apple.Apns {
         let returnMe:Apple.Apns.Push = builderResult
         return returnMe
       }
+      @discardableResult
       public func mergeFrom(other:Apple.Apns.Push) throws -> Apple.Apns.Push.Builder {
         if other == Apple.Apns.Push() {
          return self
         }
         if (other.hasAps) {
-            _ = try mergeAps(value: other.aps)
+            try mergeAps(value: other.aps)
         }
-        _ = try merge(unknownField: other.unknownFields)
+        if other.hasImage {
+             image = other.image
+        }
+        if other.hasVideo {
+             video = other.video
+        }
+        if other.hasAudio {
+             audio = other.audio
+        }
+        try merge(unknownField: other.unknownFields)
         return self
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push.Builder {
            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
       }
+      @discardableResult
       override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Builder {
         let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
         while (true) {
@@ -1746,10 +1814,19 @@ public extension Apple.Apns {
           case 10:
             let subBuilder:Apple.Apns.Push.Aps.Builder = Apple.Apns.Push.Aps.Builder()
             if hasAps {
-              _ = try subBuilder.mergeFrom(other: aps)
+              try subBuilder.mergeFrom(other: aps)
             }
             try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
             aps = subBuilder.buildPartial()
+
+          case 18:
+            image = try codedInputStream.readString()
+
+          case 26:
+            video = try codedInputStream.readString()
+
+          case 34:
+            audio = try codedInputStream.readString()
 
           default:
             if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
@@ -1759,17 +1836,26 @@ public extension Apple.Apns {
           }
         }
       }
-      override class public func decodeToBuilder(jsonMap:Dictionary<String,AnyObject>) throws -> Apple.Apns.Push.Builder {
+      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Builder {
         let resultDecodedBuilder = Apple.Apns.Push.Builder()
-        if let jsonValueAps = jsonMap["aps"] as? Dictionary<String,AnyObject> {
+        if let jsonValueAps = jsonMap["aps"] as? Dictionary<String,Any> {
           resultDecodedBuilder.aps = try Apple.Apns.Push.Aps.Builder.decodeToBuilder(jsonMap:jsonValueAps).build()
 
+        }
+        if let jsonValueImage = jsonMap["image"] as? String {
+          resultDecodedBuilder.image = jsonValueImage
+        }
+        if let jsonValueVideo = jsonMap["video"] as? String {
+          resultDecodedBuilder.video = jsonValueVideo
+        }
+        if let jsonValueAudio = jsonMap["audio"] as? String {
+          resultDecodedBuilder.audio = jsonValueAudio
         }
         return resultDecodedBuilder
       }
       override class public func fromJSONToBuilder(data:Data) throws -> Apple.Apns.Push.Builder {
         let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
-        guard let jsDataCast = jsonData as? Dictionary<String,AnyObject> else {
+        guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
           throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
         }
         return try Apple.Apns.Push.Builder.decodeToBuilder(jsonMap:jsDataCast)
@@ -1778,6 +1864,126 @@ public extension Apple.Apns {
 
   }
 
+}
+extension Apple.Apns.ProviderData: GeneratedMessageProtocol {
+  public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.ProviderData> {
+    var mergedArray = Array<Apple.Apns.ProviderData>()
+    while let value = try parseDelimitedFrom(inputStream: inputStream) {
+      mergedArray.append(value)
+    }
+    return mergedArray
+  }
+  public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.ProviderData? {
+    return try Apple.Apns.ProviderData.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+  }
+  public class func parseFrom(data: Data) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.default.extensionRegistry).build()
+  }
+  public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(inputStream: inputStream).build()
+  }
+  public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.ProviderData {
+    return try Apple.Apns.ProviderData.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+  }
+}
+extension Apple.Apns.Response: GeneratedMessageProtocol {
+  public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Response> {
+    var mergedArray = Array<Apple.Apns.Response>()
+    while let value = try parseDelimitedFrom(inputStream: inputStream) {
+      mergedArray.append(value)
+    }
+    return mergedArray
+  }
+  public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Response? {
+    return try Apple.Apns.Response.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+  }
+  public class func parseFrom(data: Data) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.default.extensionRegistry).build()
+  }
+  public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(inputStream: inputStream).build()
+  }
+  public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Response {
+    return try Apple.Apns.Response.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+  }
+}
+extension Apple.Apns.Push: GeneratedMessageProtocol {
+  public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Push> {
+    var mergedArray = Array<Apple.Apns.Push>()
+    while let value = try parseDelimitedFrom(inputStream: inputStream) {
+      mergedArray.append(value)
+    }
+    return mergedArray
+  }
+  public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Push? {
+    return try Apple.Apns.Push.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+  }
+  public class func parseFrom(data: Data) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.default.extensionRegistry).build()
+  }
+  public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(inputStream: inputStream).build()
+  }
+  public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push {
+    return try Apple.Apns.Push.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+  }
+}
+extension Apple.Apns.Push.Aps: GeneratedMessageProtocol {
+  public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Apple.Apns.Push.Aps> {
+    var mergedArray = Array<Apple.Apns.Push.Aps>()
+    while let value = try parseDelimitedFrom(inputStream: inputStream) {
+      mergedArray.append(value)
+    }
+    return mergedArray
+  }
+  public class func parseDelimitedFrom(inputStream: InputStream) throws -> Apple.Apns.Push.Aps? {
+    return try Apple.Apns.Push.Aps.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+  }
+  public class func parseFrom(data: Data) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(data: data, extensionRegistry:Apple.Apns.PushServiceRoot.default.extensionRegistry).build()
+  }
+  public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(inputStream: InputStream) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(inputStream: inputStream).build()
+  }
+  public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+  }
+  public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Apple.Apns.Push.Aps {
+    return try Apple.Apns.Push.Aps.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+  }
 }
 
 // @@protoc_insertion_point(global_scope)

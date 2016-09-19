@@ -115,21 +115,21 @@ public enum APNServiceStatus: Error {
 /// Apple Push Notification Message
 public struct ApplePushMessage {
     /// Message Id
-    fileprivate(set) public var messageId:String = UUID().uuidString
+    public let messageId:String = UUID().uuidString
     /// Application BundleID
-    public var topic:String
+    public let topic:String
     /// APNS Priority 5 or 10
-    public var priority:Int
+    public let priority:Int
     /// APNS Payload aps {...}
-    public var payload:Dictionary<String,AnyObject>
+    public let payload:Dictionary<String,Any>
     /// Device Token without <> and whitespaces
-    public var deviceToken:String
+    public let deviceToken:String
     /// Path for P12 certificate
-    public var certificatePath:String
+    public let certificatePath:String
     /// Passphrase for certificate
-    public var passphrase:String
+    public let passphrase:String
     /// Use sandbox server URL or not
-    public var sandbox:Bool
+    public let sandbox:Bool
     /// Response Clousure
     public var responseBlock:((APNServiceResponse) -> ())?
     /// Network error Clousure
@@ -153,6 +153,16 @@ public struct ApplePushMessage {
     /// - returns: URLSessionDataTask
     public func sendWith(session:URLSession?) throws -> URLSessionDataTask? {
         return try APNSNetwork(session:session).sendPushWith(message: self)
+    }
+    
+    public init(topic:String, priority:Int, payload:Dictionary<String,Any>, deviceToken:String, certificatePath:String, passphrase:String, sandbox:Bool = true) {
+        self.topic = topic
+        self.priority = priority
+        self.payload = payload
+        self.deviceToken = deviceToken
+        self.certificatePath = certificatePath
+        self.passphrase = passphrase
+        self.sandbox = sandbox
     }
 }
 

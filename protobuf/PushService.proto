@@ -42,6 +42,9 @@ message Push {
     }
     
 	Aps aps = 1;
+    string image = 2;
+    string video = 3;
+    string audio = 4;
 }
 
 

@@ -59,16 +59,13 @@ class UnitTest: XCTestCase {
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
         let str = Bundle(for:UnitTest.self).path(forResource: "cert", ofType: "p12")!
-        
+//        ApplePushMessage(topic: <#T##String#>, priority: <#T##Int#>, payload: <#T##Dictionary<String, AnyObject>#>, deviceToken: <#T##String#>, certificatePath: <#T##String#>, passphrase: <#T##String#>)
         var mess = ApplePushMessage(topic: "com.advisa.voipservice",
                              priority: 10,
                              payload: payload,
                              deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
                              certificatePath:str,
-                             passphrase: "123456",
-                             sandbox: true,
-                             responseBlock:nil,
-                             networkError:nil, session: nil)
+                             passphrase: "123456")
         
         mess.responseBlock = { response in
             XCTAssertTrue(response.serviceStatus.0 == 200)
@@ -101,10 +98,7 @@ class UnitTest: XCTestCase {
                                     payload: payload,
                                     deviceToken: "3dd55a590564asdasd41ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
                                     certificatePath:str,
-                                    passphrase: "123456",
-                                    sandbox: true,
-                                    responseBlock:nil,
-                                    networkError:nil, session: nil)
+                                    passphrase: "123456")
         
         mess.responseBlock = { response in
             XCTAssertTrue(response.serviceStatus.1 == APNServiceStatus.badRequest)

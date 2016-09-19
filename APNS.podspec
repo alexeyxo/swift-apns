@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "APNS"
-  s.version      = "1.0.0"
+  s.version      = "1.2.0"
   s.summary      = "Swift Framework for sending Apple Push Notification over HTTP/2 API"
   s.homepage     = "https://github.com/alexeyxo/swift-apns"
   s.license      = "Apache 2.0"
@@ -30,5 +30,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/alexeyxo/swift-apns.git", :tag => s.version }
   s.source_files = 'Source/*.{swift}'
   s.requires_arc = true
-  s.frameworks   = 'Foundation', 'Security'
+  s.frameworks   = 'Foundation', 'Security', 'ProtocolBuffers-Swift'
 end

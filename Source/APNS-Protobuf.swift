@@ -12,14 +12,14 @@ import Foundation
 
 extension APNSNetwork {
     
-    public func sendPush(pushService:Apple.Apns.ProviderData, responseBlock:((response:Apple.Apns.Response) -> Void)?, networkError:((NSError?) -> ())?) throws -> URLSessionDataTask? {
+    public func sendPush(pushService:Apple.Apns.ProviderData, responseBlock:((_ response:Apple.Apns.Response) -> Void)?, networkError:((Error?) -> ())?) throws -> URLSessionDataTask? {
         
         let payload = try getPayload(push: pushService)
         var sandbox = true
         if pushService.serviceIdentity == .production {
             sandbox = false
         }
-        let task =  try sendPush(topic:pushService.bundle,
+        let task =  try sendPushWith(topic:pushService.bundle,
                                  priority: Int(pushService.priority),
                                  payload: payload,
                                  deviceToken: pushService.token,
@@ -28,7 +28,7 @@ extension APNSNetwork {
                                  sandbox: sandbox,
                                  responseBlock: { (response) -> Void in
                                     let responseObject = APNServiceStatus.getResponseObject(response: response)
-                                    responseBlock?(response: responseObject)
+                                    responseBlock?(responseObject)
                                  }, networkError: networkError)
         return task
     }
@@ -37,7 +37,7 @@ extension APNSNetwork {
         return getIdentityWith(certificatePath:providerData.certificatePath, passphrase: providerData.certificatePassphrase)
     }
     
-    private func getPayload(push:Apple.Apns.ProviderData) throws -> Dictionary<String,AnyObject> {
+    private func getPayload(push:Apple.Apns.ProviderData) throws -> Dictionary<String,Any> {
         var payload = try push.payload.encode()
         if var aps = payload["aps"] as? Dictionary<String,AnyObject> {
             if let contentAvailable = aps["contentAvailable"] {
