@@ -38,7 +38,8 @@ message Push {
         string sound = 2;
         int32 badge = 3;
         int32 content_available = 4;
-        string category = 5; 
+        int32 mutable_content = 5;
+        string category = 6; 
     }
     
 	Aps aps = 1;

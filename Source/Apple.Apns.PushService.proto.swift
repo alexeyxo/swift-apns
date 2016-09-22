@@ -185,7 +185,7 @@ public extension Apple.Apns {
         jsonMap["token"] = token
       }
       if hasPriority {
-        jsonMap["priority"] = priority
+        jsonMap["priority"] = UInt(priority)
       }
       if hasPayload {
         jsonMap["payload"] = try payload.encode()
@@ -603,8 +603,8 @@ public extension Apple.Apns {
         if let jsonValueToken = jsonMap["token"] as? String {
           resultDecodedBuilder.token = jsonValueToken
         }
-        if let jsonValuePriority = jsonMap["priority"] as? UInt32 {
-          resultDecodedBuilder.priority = jsonValuePriority
+        if let jsonValuePriority = jsonMap["priority"] as? UInt {
+          resultDecodedBuilder.priority = UInt32(jsonValuePriority)
         }
         if let jsonValuePayload = jsonMap["payload"] as? Dictionary<String,Any> {
           resultDecodedBuilder.payload = try Apple.Apns.Push.Builder.decodeToBuilder(jsonMap:jsonValuePayload).build()
@@ -737,7 +737,7 @@ public extension Apple.Apns {
 
       var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
       if hasStatusCode {
-        jsonMap["statusCode"] = statusCode
+        jsonMap["statusCode"] = Int(statusCode)
       }
       if hasApnsId {
         jsonMap["apnsId"] = apnsId
@@ -990,8 +990,8 @@ public extension Apple.Apns {
       }
       class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Response.Builder {
         let resultDecodedBuilder = Apple.Apns.Response.Builder()
-        if let jsonValueStatusCode = jsonMap["statusCode"] as? Int32 {
-          resultDecodedBuilder.statusCode = jsonValueStatusCode
+        if let jsonValueStatusCode = jsonMap["statusCode"] as? Int {
+          resultDecodedBuilder.statusCode = Int32(jsonValueStatusCode)
         }
         if let jsonValueApnsId = jsonMap["apnsId"] as? String {
           resultDecodedBuilder.apnsId = jsonValueApnsId
@@ -1045,6 +1045,7 @@ public extension Apple.Apns {
           fieldCheck = fieldCheck && (lhs.hasSound == rhs.hasSound) && (!lhs.hasSound || lhs.sound == rhs.sound)
           fieldCheck = fieldCheck && (lhs.hasBadge == rhs.hasBadge) && (!lhs.hasBadge || lhs.badge == rhs.badge)
           fieldCheck = fieldCheck && (lhs.hasContentAvailable == rhs.hasContentAvailable) && (!lhs.hasContentAvailable || lhs.contentAvailable == rhs.contentAvailable)
+          fieldCheck = fieldCheck && (lhs.hasMutableContent == rhs.hasMutableContent) && (!lhs.hasMutableContent || lhs.mutableContent == rhs.mutableContent)
           fieldCheck = fieldCheck && (lhs.hasCategory == rhs.hasCategory) && (!lhs.hasCategory || lhs.category == rhs.category)
           fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
           return fieldCheck
@@ -1061,6 +1062,9 @@ public extension Apple.Apns {
 
         public fileprivate(set) var contentAvailable:Int32 = Int32(0)
         public fileprivate(set) var hasContentAvailable:Bool = false
+
+        public fileprivate(set) var mutableContent:Int32 = Int32(0)
+        public fileprivate(set) var hasMutableContent:Bool = false
 
         public fileprivate(set) var category:String = ""
         public fileprivate(set) var hasCategory:Bool = false
@@ -1084,8 +1088,11 @@ public extension Apple.Apns {
           if hasContentAvailable {
             try codedOutputStream.writeInt32(fieldNumber: 4, value:contentAvailable)
           }
+          if hasMutableContent {
+            try codedOutputStream.writeInt32(fieldNumber: 5, value:mutableContent)
+          }
           if hasCategory {
-            try codedOutputStream.writeString(fieldNumber: 5, value:category)
+            try codedOutputStream.writeString(fieldNumber: 6, value:category)
           }
           try unknownFields.writeTo(codedOutputStream: codedOutputStream)
         }
@@ -1108,8 +1115,11 @@ public extension Apple.Apns {
           if hasContentAvailable {
             serialize_size += contentAvailable.computeInt32Size(fieldNumber: 4)
           }
+          if hasMutableContent {
+            serialize_size += mutableContent.computeInt32Size(fieldNumber: 5)
+          }
           if hasCategory {
-            serialize_size += category.computeStringSize(fieldNumber: 5)
+            serialize_size += category.computeStringSize(fieldNumber: 6)
           }
           serialize_size += unknownFields.serializedSize()
           memoizedSerializedSize = serialize_size
@@ -1146,10 +1156,13 @@ public extension Apple.Apns {
             jsonMap["sound"] = sound
           }
           if hasBadge {
-            jsonMap["badge"] = badge
+            jsonMap["badge"] = Int(badge)
           }
           if hasContentAvailable {
-            jsonMap["contentAvailable"] = contentAvailable
+            jsonMap["contentAvailable"] = Int(contentAvailable)
+          }
+          if hasMutableContent {
+            jsonMap["mutableContent"] = Int(mutableContent)
           }
           if hasCategory {
             jsonMap["category"] = category
@@ -1176,6 +1189,9 @@ public extension Apple.Apns {
           if hasContentAvailable {
             output += "\(indent) contentAvailable: \(contentAvailable) \n"
           }
+          if hasMutableContent {
+            output += "\(indent) mutableContent: \(mutableContent) \n"
+          }
           if hasCategory {
             output += "\(indent) category: \(category) \n"
           }
@@ -1196,6 +1212,9 @@ public extension Apple.Apns {
                 }
                 if hasContentAvailable {
                    hashCode = (hashCode &* 31) &+ contentAvailable.hashValue
+                }
+                if hasMutableContent {
+                   hashCode = (hashCode &* 31) &+ mutableContent.hashValue
                 }
                 if hasCategory {
                    hashCode = (hashCode &* 31) &+ category.hashValue
@@ -1325,6 +1344,31 @@ public extension Apple.Apns {
                builderResult.contentAvailable = Int32(0)
                return self
           }
+          public var hasMutableContent:Bool {
+               get {
+                    return builderResult.hasMutableContent
+               }
+          }
+          public var mutableContent:Int32 {
+               get {
+                    return builderResult.mutableContent
+               }
+               set (value) {
+                   builderResult.hasMutableContent = true
+                   builderResult.mutableContent = value
+               }
+          }
+          @discardableResult
+          public func setMutableContent(_ value:Int32) -> Apple.Apns.Push.Aps.Builder {
+            self.mutableContent = value
+            return self
+          }
+          @discardableResult
+          public func clearMutableContent() -> Apple.Apns.Push.Aps.Builder{
+               builderResult.hasMutableContent = false
+               builderResult.mutableContent = Int32(0)
+               return self
+          }
           public var hasCategory:Bool {
                get {
                     return builderResult.hasCategory
@@ -1388,6 +1432,9 @@ public extension Apple.Apns {
             if other.hasContentAvailable {
                  contentAvailable = other.contentAvailable
             }
+            if other.hasMutableContent {
+                 mutableContent = other.mutableContent
+            }
             if other.hasCategory {
                  category = other.category
             }
@@ -1420,7 +1467,10 @@ public extension Apple.Apns {
               case 32:
                 contentAvailable = try codedInputStream.readInt32()
 
-              case 42:
+              case 40:
+                mutableContent = try codedInputStream.readInt32()
+
+              case 50:
                 category = try codedInputStream.readString()
 
               default:
@@ -1439,11 +1489,14 @@ public extension Apple.Apns {
             if let jsonValueSound = jsonMap["sound"] as? String {
               resultDecodedBuilder.sound = jsonValueSound
             }
-            if let jsonValueBadge = jsonMap["badge"] as? Int32 {
-              resultDecodedBuilder.badge = jsonValueBadge
+            if let jsonValueBadge = jsonMap["badge"] as? Int {
+              resultDecodedBuilder.badge = Int32(jsonValueBadge)
             }
-            if let jsonValueContentAvailable = jsonMap["contentAvailable"] as? Int32 {
-              resultDecodedBuilder.contentAvailable = jsonValueContentAvailable
+            if let jsonValueContentAvailable = jsonMap["contentAvailable"] as? Int {
+              resultDecodedBuilder.contentAvailable = Int32(jsonValueContentAvailable)
+            }
+            if let jsonValueMutableContent = jsonMap["mutableContent"] as? Int {
+              resultDecodedBuilder.mutableContent = Int32(jsonValueMutableContent)
             }
             if let jsonValueCategory = jsonMap["category"] as? String {
               resultDecodedBuilder.category = jsonValueCategory

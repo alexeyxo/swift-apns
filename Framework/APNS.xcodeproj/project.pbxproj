@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F270F5E1D943CAE0013D585 /* APNS-Protobuf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1823371D403C0300022759 /* APNS-Protobuf.swift */; };
+		3F270F5F1D943CB10013D585 /* Apple.Apns.PushService.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1823381D403C0300022759 /* Apple.Apns.PushService.proto.swift */; };
 		3F3823431D42292500646806 /* APNSNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBC7F31C5CC25100EF69CC /* APNSNetwork.swift */; };
 		3F388E141C5E1DC20000EDCE /* APNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBC7E71C5CC20F00EF69CC /* APNS.framework */; };
 		3F388E221C5E35F20000EDCE /* UnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F388E111C5E1DC20000EDCE /* UnitTest.swift */; };
@@ -215,6 +217,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F270F5F1D943CB10013D585 /* Apple.Apns.PushService.proto.swift in Sources */,
+				3F270F5E1D943CAE0013D585 /* APNS-Protobuf.swift in Sources */,
 				3F3823431D42292500646806 /* APNSNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -39,13 +39,16 @@ extension APNSNetwork {
     
     private func getPayload(push:Apple.Apns.ProviderData) throws -> Dictionary<String,Any> {
         var payload = try push.payload.encode()
-        if var aps = payload["aps"] as? Dictionary<String,AnyObject> {
+        if var aps = payload["aps"] as? Dictionary<String,Any> {
             if let contentAvailable = aps["contentAvailable"] {
                 aps["content-available"] = contentAvailable
                 aps.removeValue(forKey:"contentAvailable")
-                payload["aps"] = aps
-                
             }
+            if let mutableContent = aps["mutableContent"] {
+                aps["mutable-content"] = mutableContent
+                aps.removeValue(forKey: "mutableContent")
+            }
+            payload["aps"] = aps
         }
         return payload
     }
