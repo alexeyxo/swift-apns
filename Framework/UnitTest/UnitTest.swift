@@ -59,11 +59,10 @@ class UnitTest: XCTestCase {
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
         let str = Bundle(for:UnitTest.self).path(forResource: "cert", ofType: "p12")!
-//        ApplePushMessage(topic: <#T##String#>, priority: <#T##Int#>, payload: <#T##Dictionary<String, AnyObject>#>, deviceToken: <#T##String#>, certificatePath: <#T##String#>, passphrase: <#T##String#>)
-        var mess = ApplePushMessage(topic: "com.advisa.voipservice",
+        var mess = ApplePushMessage(topic: "com.123.123",
                              priority: 10,
                              payload: payload,
-                             deviceToken: "3dd55a59056441ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
+                             deviceToken: "e86ba7b98a8bbc2725481caed7c2b2d906dae1f11339bb11a6918095d6d14933",
                              certificatePath:str,
                              passphrase: "123456")
         
@@ -93,10 +92,10 @@ class UnitTest: XCTestCase {
         let aps = ["sound":"default", "alert":"testPush()"]
         let payload = ["aps":aps]
         let str = Bundle(for:UnitTest.self).path(forResource: "cert", ofType: "p12")!
-        var mess = ApplePushMessage(topic: "com.advisa.voipservice",
+        var mess = ApplePushMessage(topic: "com.123.123",
                                     priority: 10,
                                     payload: payload,
-                                    deviceToken: "3dd55a590564asdasd41ab275b8b679458388cae76be3a9a02a00234388e50fe91f2fe",
+                                    deviceToken: "e86ba7b98a8bbc27254ddd81caed7c2b2d906dae1f11339bb11a6918095d6d14933",
                                     certificatePath:str,
                                     passphrase: "123456")
         

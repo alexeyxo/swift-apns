@@ -177,7 +177,8 @@ open class APNSNetwork:NSObject {
     public init(session:URLSession?) {
         super.init()
         guard let session = session else {
-            APNSNetwork.session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            APNSNetwork.session = session
             return
         }
         APNSNetwork.session = session
@@ -247,10 +248,14 @@ open class APNSNetwork:NSObject {
         return task
         
     }
+    
 }
 
-extension APNSNetwork: URLSessionDelegate {
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: (Foundation.URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+extension APNSNetwork: URLSessionDelegate, URLSessionTaskDelegate {
+    public func urlSession(_ session: URLSession,
+                           task: URLSessionTask,
+                           didReceive challenge: URLAuthenticationChallenge,
+                           completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
         var cert : SecCertificate?
         SecIdentityCopyCertificate(self.secIdentity!, &cert)

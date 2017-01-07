@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F270F5E1D943CAE0013D585 /* APNS-Protobuf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1823371D403C0300022759 /* APNS-Protobuf.swift */; };
-		3F270F5F1D943CB10013D585 /* Apple.Apns.PushService.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1823381D403C0300022759 /* Apple.Apns.PushService.proto.swift */; };
+		3F1968811E2107D80005FEA8 /* cert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 3F1968801E2107D80005FEA8 /* cert.p12 */; };
 		3F3823431D42292500646806 /* APNSNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBC7F31C5CC25100EF69CC /* APNSNetwork.swift */; };
 		3F388E141C5E1DC20000EDCE /* APNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBC7E71C5CC20F00EF69CC /* APNS.framework */; };
 		3F388E221C5E35F20000EDCE /* UnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F388E111C5E1DC20000EDCE /* UnitTest.swift */; };
-		3F6A672B1D423F3200432AA1 /* cert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A672A1D423F3100432AA1 /* cert.p12 */; };
 		3FBBC7EB1C5CC20F00EF69CC /* APNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FBBC7EA1C5CC20F00EF69CC /* APNS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -29,10 +27,10 @@
 /* Begin PBXFileReference section */
 		3F1823371D403C0300022759 /* APNS-Protobuf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "APNS-Protobuf.swift"; path = "../../Source/APNS-Protobuf.swift"; sourceTree = "<group>"; };
 		3F1823381D403C0300022759 /* Apple.Apns.PushService.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Apple.Apns.PushService.proto.swift; path = ../../Source/Apple.Apns.PushService.proto.swift; sourceTree = "<group>"; };
+		3F1968801E2107D80005FEA8 /* cert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.p12; sourceTree = SOURCE_ROOT; };
 		3F388E0F1C5E1DC20000EDCE /* UnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F388E111C5E1DC20000EDCE /* UnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTest.swift; sourceTree = "<group>"; };
 		3F388E131C5E1DC20000EDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3F6A672A1D423F3100432AA1 /* cert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.p12; sourceTree = "<group>"; };
 		3FBBC7E71C5CC20F00EF69CC /* APNS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = APNS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBBC7EA1C5CC20F00EF69CC /* APNS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNS.h; sourceTree = "<group>"; };
 		3FBBC7EC1C5CC20F00EF69CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,8 +59,8 @@
 		3F388E101C5E1DC20000EDCE /* UnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				3F1968801E2107D80005FEA8 /* cert.p12 */,
 				3F388E111C5E1DC20000EDCE /* UnitTest.swift */,
-				3F6A672A1D423F3100432AA1 /* cert.p12 */,
 				3F388E131C5E1DC20000EDCE /* Info.plist */,
 			);
 			path = UnitTest;
@@ -155,7 +153,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Alexey Khokhlov";
 				TargetAttributes = {
 					3F388E0E1C5E1DC20000EDCE = {
@@ -191,7 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F6A672B1D423F3200432AA1 /* cert.p12 in Resources */,
+				3F1968811E2107D80005FEA8 /* cert.p12 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,8 +215,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F270F5F1D943CB10013D585 /* Apple.Apns.PushService.proto.swift in Sources */,
-				3F270F5E1D943CAE0013D585 /* APNS-Protobuf.swift in Sources */,
 				3F3823431D42292500646806 /* APNSNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,8 +268,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -319,8 +317,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";

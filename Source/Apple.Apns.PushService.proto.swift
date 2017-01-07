@@ -595,7 +595,7 @@ public extension Apple.Apns {
           }
         }
       }
-      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.ProviderData.Builder {
+      class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.ProviderData.Builder {
         let resultDecodedBuilder = Apple.Apns.ProviderData.Builder()
         if let jsonValueBundle = jsonMap["bundle"] as? String {
           resultDecodedBuilder.bundle = jsonValueBundle
@@ -988,7 +988,7 @@ public extension Apple.Apns {
           }
         }
       }
-      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Response.Builder {
+      class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Response.Builder {
         let resultDecodedBuilder = Apple.Apns.Response.Builder()
         if let jsonValueStatusCode = jsonMap["statusCode"] as? Int {
           resultDecodedBuilder.statusCode = Int32(jsonValueStatusCode)
@@ -1481,7 +1481,7 @@ public extension Apple.Apns {
               }
             }
           }
-          class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Aps.Builder {
+          class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Aps.Builder {
             let resultDecodedBuilder = Apple.Apns.Push.Aps.Builder()
             if let jsonValueAlert = jsonMap["alert"] as? String {
               resultDecodedBuilder.alert = jsonValueAlert
@@ -1889,7 +1889,7 @@ public extension Apple.Apns {
           }
         }
       }
-      class public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Builder {
+      class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Apple.Apns.Push.Builder {
         let resultDecodedBuilder = Apple.Apns.Push.Builder()
         if let jsonValueAps = jsonMap["aps"] as? Dictionary<String,Any> {
           resultDecodedBuilder.aps = try Apple.Apns.Push.Aps.Builder.decodeToBuilder(jsonMap:jsonValueAps).build()
